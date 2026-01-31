@@ -1,15 +1,18 @@
-import { useGLTF } from '@react-three/drei';
 import { useRef } from 'react';
+import { useGLTF } from '@react-three/drei';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 const Target = (props) => {
     const targetRef = useRef();
-    const { scene } = useGLTF(
-        'https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/target-stand/model.gltf',
-    );
+    
+    // 1. CHANGE: Load 'scene' instead of specific nodes. 
+    // This is safer because it works with any .glb file you download.
+    const { scene } = useGLTF('/models/target/target_stand.glb');
 
     useGSAP(() => {
+        if (!targetRef.current) return;
+
         gsap.to(targetRef.current.position, {
             y: targetRef.current.position.y + 0.5,
             duration: 1.5,
@@ -19,9 +22,17 @@ const Target = (props) => {
     });
 
     return (
-        <mesh {...props} ref={targetRef} rotation={[0, Math.PI / 5, 0]} scale={1.5}>
-            <primitive object={scene} />
-        </mesh>
+        <group {...props} dispose={null}>
+            {/* 2. CHANGE: Use <primitive> instead of <mesh>. 
+                This automatically renders whatever is inside the file.
+            */}
+            <primitive 
+                object={scene} 
+                ref={targetRef} 
+                rotation={[0, Math.PI / 5, 0]} 
+                scale={1.5} 
+            />
+        </group>
     );
 };
 
