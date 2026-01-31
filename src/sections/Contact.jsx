@@ -3,8 +3,14 @@ import useAlert from '../hooks/useAlert.js';
 import Alert from '../components/Alert.jsx';
 import emailjs from '@emailjs/browser';
 
+
 const Contact = () => {
     const formRef = useRef();
+    console.log(
+        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
+        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+    );
 
     const { alert, showAlert, hideAlert } = useAlert();
     const [loading, setLoading] = useState(false);
@@ -19,24 +25,43 @@ const Contact = () => {
         setLoading(true);
         try {
            await emailjs.send(
-                "service_nu0ozrm",
-                "template_cod8icw",
+               import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
+               import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
+               {
+                   from_name: form.name,
+                   to_name: 'Digonta Das',
+                   from_email: form.email,
+                   to_email: 'digontadas0171@gmail.com',
+                   message: form.message,
+               },
+               import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+           )
 
-                {
-                    from_name: form.name,
-                    to_name: 'Digonta Das',
-                    from_email: form.email,
-                    to_email: 'digontadas0171@gmail.com',
-                    message: form.message,
-                },
-               "UgJVOFeMlaGltP2Bw"
-               )
-                setLoading(false);
-                Alert("Your message has been sent.");
+            setLoading(false);
+            showAlert({
+                show: true,
+                text: 'Your message has been sent...',
+                type: 'success',
+            });
+            setForm({
+                name: '',
+                email: '',
+                message: '',
+            });
+            setTimeout(() => {
+                hideAlert(false);
+            }, 3000);
+
+
         } catch (error) {
             setLoading(false);
             console.log(error);
-            Alert("Something went wrong.");
+            showAlert({
+                show: true,
+                text: 'Something went wrong...',
+                type: 'danger',
+            });
+
         }
     }
 
