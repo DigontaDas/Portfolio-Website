@@ -62,7 +62,7 @@ export const myProjects = [
         desc: 'WanderTales a traveling journal website where people will share their journey stories and reviews and tips of a place where they visited, what they faced or what if someone wants to go there needs there they can add good company or hotel reviews too',
         subdue:
             'Built as a unique Software-as-a-Service app with MongoDB, Tailwind CSS, Express.js, React.js and Node.js, WanderTales is designed for optimal performance and scalability.',
-        href: 'https://www.youtube.com/watch?v=zfAb95tJvZQ',
+        href: 'https://youtu.be/gI9KdtDwfIk',
         texture: '/textures/project/Project-1.mp4',
         logo: '/assets/project-logo1.png',
         logoStyle: {
@@ -171,5 +171,6 @@ export const calculateSizes = (isSmall, isMobile, isTablet) => {
 };
 
 export const workExperiences = [
+
 
 ];
