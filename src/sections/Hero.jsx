@@ -1,20 +1,36 @@
 import { useEffect, useRef, useState } from "react";
 
 const LINES = [
-  "import { useState, useEffect } from 'react';",
-  "import torch from 'pytorch';",
+  "import torch",
+  "from thesis_lib import TiledCNN3D",
   "",
-  "# Coronary Artery CNN — 3D Tile Model",
-  "model = TileCNN3D(",
-  "  input_shape=(64, 64, 64),",
-  "  num_classes=2,",
-  "  backbone='resnet50'",
+  "# Current Research: Coronary Artery Blockage",
+  "model = TiledCNN3D(",
+  "  input_size=(64, 64, 64),",
+  "  stride='tiled',",
+  "  efficiency_mode=True",
   ")",
   "",
-  "accuracy = model.evaluate(ct_scans)",
-  "# acc: 94.7% | dataset: 281 samples",
+  "print('Loading Ibrahim Cardiac Hospital data...')",
+  "accuracy = model.train(ct_scans)",
+  "# result: 96.2% accuracy reached",
 ];
+function Typewriter({ text, delay = 100 }) {
+  const [currentText, setCurrentText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setCurrentText((prevText) => prevText + text[currentIndex]);
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+      }, delay);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, delay, text]);
+
+  return <span>{currentText}</span>;
+}
 function TerminalTyper() {
   const [displayed, setDisplayed] = useState([]);
   const [lineIdx, setLineIdx] = useState(0);
@@ -240,8 +256,10 @@ export default function HeroSection() {
             className="text-sm tracking-widest uppercase mb-3"
             style={{ color: "rgba(0,220,240,0.6)", fontFamily: "monospace" }}
           >
-            Hi, I am{" "}
-            <span style={{ color: "rgba(0,220,240,0.9)" }}>Digonta Das</span>
+            <Typewriter text="Hi, I am " delay={50} />
+            <span style={{ color: "rgba(0,220,240,0.9)" }}>
+              <Typewriter text="Digonta Das" delay={80} />
+            </span>
           </div>
 
           {/* Headline */}
