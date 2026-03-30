@@ -1,90 +1,106 @@
-import { useState } from "react";
+
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { myProjects } from '../constants/index.js'; // Keeping your data source
+import { Suspense, useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Center, OrbitControls } from '@react-three/drei';
 
-// Map your tech names to colors for Claude's tag system
-const stackColors = {
-  React: "#61dafb",
-  "Node.js": "#6cc24a",
-  MongoDB: "#47a248",
-  Python: "#ffd43b",
-  PyTorch: "#ee4c2c",
-  // Add others as needed
+import { myProjects } from '../constants/index.js';
+import CanvasLoader from '../components/Loading.jsx';
+import DemoComputer from '../components/DemoComputer.jsx';
+
+const projectCount = myProjects.length;
+
+const Projects = () => {
+    const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+
+
+    const handleNavigation = (direction) => {
+        setSelectedProjectIndex((prevIndex) => {
+            if (direction === 'previous') {
+                return prevIndex === 0 ? projectCount - 1 : prevIndex - 1;
+            } else {
+                return prevIndex === projectCount - 1 ? 0 : prevIndex + 1;
+            }
+        });
+    };
+
+    useGSAP(() => {
+        gsap.fromTo(`.animatedText`, { opacity: 0 }, { opacity: 1, duration: 1, stagger: 0.2, ease: 'power2.inOut' });
+    }, [selectedProjectIndex]);
+
+    const currentProject = myProjects[selectedProjectIndex];
+
+    return (
+        <section className="c-space my-20" id="projects">
+            <p className="head-text">My Selected Work</p>
+
+            <div className="grid lg:grid-cols-2 grid-cols-1 mt-12 gap-5 w-full">
+                <div className="flex flex-col gap-5 relative sm:p-10 py-10 px-5 shadow-2xl shadow-black-200">
+                    <div className="absolute top-0 right-0">
+                        <img src={currentProject.spotlight} alt="spotlight" className="w-full h-96 object-cover rounded-xl" />
+                    </div>
+
+                    <div className="p-3 backdrop-filter backdrop-blur-3xl w-fit rounded-lg" style={currentProject.logoStyle}>
+                        <img className="w-10 h-10 shadow-sm" src={currentProject.logo} alt="logo" />
+                    </div>
+
+                    <div className="flex flex-col gap-5 text-white-600 my-5">
+                        <p className="text-white text-2xl font-semibold animatedText">{currentProject.title}</p>
+
+                        <p className="animatedText">{currentProject.desc}</p>
+                        <p className="animatedText">{currentProject.subdue}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between flex-wrap gap-5">
+                        <div className="flex items-center gap-3">
+                            {currentProject.tags.map((tag, index) => (
+                                <div key={index} className="tech-logo">
+                                    <img src={tag.path} alt={tag.name} />
+                                </div>
+                            ))}
+                        </div>
+
+                        <a
+                            className="flex items-center gap-2 cursor-pointer text-white-600"
+                            href={currentProject.href}
+                            target="_blank"
+                            rel="noreferrer">
+                            <p>Check Live Site</p>
+                            <img src="/assets/arrow-up.png" alt="arrow" className="w-3 h-3" />
+                        </a>
+                    </div>
+
+                    <div className="flex justify-between items-center mt-7">
+                        <button className="arrow-btn" onClick={() => handleNavigation('previous')}>
+                            <img src="/assets/left-arrow.png" alt="left arrow" />
+                        </button>
+
+                        <button className="arrow-btn" onClick={() => handleNavigation('next')}>
+                            <img src="/assets/right-arrow.png" alt="right arrow" className="w-4 h-4" />
+                        </button>
+                    </div>
+                </div>
+
+
+
+                <div className="border border-black-300 bg-black-200 rounded-lg h-96 md:h-full">
+                    <Canvas>
+                        <ambientLight intensity={Math.PI} />
+                        <directionalLight position={[10, 10, 5]} />
+                        <Center>
+                            <Suspense fallback={<CanvasLoader />}>
+                                <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
+                                    <DemoComputer texture={currentProject.texture} />
+                                </group>
+                            </Suspense>
+                        </Center>
+                        <OrbitControls maxPolarAngle={Math.PI / 2} enableZoom={false} />
+                    </Canvas>
+                </div>
+            </div>
+        </section>
+    );
 };
 
-export default function ProjectShowcase() {
-  const [active, setActive] = useState(0);
-  const project = myProjects[active];
-
-  // Keeping your GSAP animation logic
-  useGSAP(() => {
-    gsap.fromTo(`.animatedText`, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 });
-  }, [active]);
-
-  return (
-    <section style={{ background: "#060a0b", padding: "6rem 1.5rem" }} id="projects">
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <h2 className="head-text" style={{ color: "#e0eef2", marginBottom: "3rem" }}>My Selected Work</h2>
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
-          
-          {/* Content Card */}
-          <div style={{
-              background: "rgba(12,20,24,0.9)",
-              border: `1px solid #00dcf022`,
-              borderRadius: 16,
-              padding: "2.5rem",
-              minHeight: 400
-          }}>
-            <h3 className="animatedText" style={{ fontSize: "1.85rem", fontWeight: 700, color: "#dceef4", marginBottom: 6 }}>
-              {project.title}
-            </h3>
-            <p className="animatedText" style={{ color: "rgba(160,185,195,0.85)", lineHeight: 1.75, marginBottom: 28 }}>
-              {project.desc}
-            </p>
-
-            {/* Tech Stack Tags */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>
-              {project.tags.map((tag) => (
-                <span key={tag.name} style={{
-                    fontSize: 10,
-                    padding: "4px 10px",
-                    borderRadius: 4,
-                    border: `1px solid ${stackColors[tag.name] || "#888"}33`,
-                    color: stackColors[tag.name] || "#aaa",
-                    background: `${stackColors[tag.name] || "#888"}0d`,
-                }}>
-                  {tag.name}
-                </span>
-              ))}
-            </div>
-
-            <a href={project.href} target="_blank" style={{ color: "#00dcf0", textDecoration: "none", fontWeight: 600 }}>
-              Check Live Site ↗
-            </a>
-          </div>
-
-          {/* Preview Panel (Replacing the 3D Canvas) */}
-          <div style={{ background: "rgba(8,14,16,0.8)", borderRadius: 16, border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden", minHeight: 400, display: "flex", flexDirection: "column" }}>
-             <div style={{ display: "flex", gap: 8, padding: "12px 16px", background: "rgba(255,255,255,0.02)" }}>
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f57" }} />
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#febc2e" }} />
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#28c840" }} />
-             </div>
-             <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {/* You can put an image of the project here using project.spotlight */}
-                <img src={project.spotlight} style={{ width: '80%', borderRadius: 8, boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }} alt="preview" />
-             </div>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <div style={{ display: "flex", justifyContent: "center", gap: 12, marginTop: 32 }}>
-            <button onClick={() => setActive(prev => prev === 0 ? myProjects.length - 1 : prev - 1)}>←</button>
-            <button onClick={() => setActive(prev => prev === myProjects.length - 1 ? 0 : prev + 1)}>→</button>
-        </div>
-      </div>
-    </section>
-  );
-}
+export default Projects
