@@ -138,5 +138,3 @@ export const calculateSizes = (isSmall, isMobile, isTablet) => {
 };
 
 
-
-];
