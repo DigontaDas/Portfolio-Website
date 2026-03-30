@@ -12,8 +12,7 @@ const LINES = [
   ")",
   "",
   "print('Loading Ibrahim Cardiac Hospital data...')",
-  "accuracy = model.train(ct_scans)",
-  "# result: 96.2% accuracy reached",
+  "accuracy = model.train(ct_scans)"
 ];
 function Typewriter({ text, delay = 100 }) {
   const [currentText, setCurrentText] = useState("");
