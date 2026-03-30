@@ -24,7 +24,7 @@ const About = () => {
                         <div>
                             <p className="grid-headtext">Hi, I’m Digonta</p>
                             <p className="grid-subtext">
-                                I am Starting new as a Frontend and Backend Developer, with a keen research interest on Computer Vision & Deep Learning
+                                I work as an MERN Stack Developer and Starting to learn AI Engineering and Automation, with a keen research interest on Computer Vision & Deep Learning
                             </p>
                         </div>
                     </div>
