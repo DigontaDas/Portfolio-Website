@@ -264,7 +264,7 @@ export default function HeroSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Web Developer
+              MERN STACK ENGINEER
             </span>
           </h1>
 
@@ -341,7 +341,7 @@ export default function HeroSection() {
                 e.currentTarget.style.color = "rgba(200,215,220,0.8)";
               }}
             >
-              Stack & Research →
+              About me →
             </a>
           </div>
         </div>
