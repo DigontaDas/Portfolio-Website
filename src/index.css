@@ -206,3 +206,13 @@ body {
   70% { transform: rotate(0deg); }
   100% { transform: rotate(0deg); }
 }
+
+/* Overrides all section-specific blacks to match the Hero background */
+section, footer, .grid-container, .work-content, .work-canvas {
+    background-color: var(--color-black-100) !important;
+}
+
+/* Ensure the terminal image in Contact doesn't have a weird gap */
+#contact {
+    background-color: var(--color-black-100);
+}
