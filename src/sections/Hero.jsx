@@ -256,9 +256,9 @@ export default function HeroSection() {
             className="text-sm tracking-widest uppercase mb-3"
             style={{ color: "rgba(0,220,240,0.6)", fontFamily: "monospace" }}
           >
-            <Typewriter text="Hi, I am " delay={50} />
+            <Typewriter text="Hi, I am " delay={100} />
             <span style={{ color: "rgba(0,220,240,0.9)" }}>
-              <Typewriter text="Digonta Das" delay={80} />
+              <Typewriter text="Digonta Das" delay={120} />
             </span>
           </div>
 
@@ -272,7 +272,7 @@ export default function HeroSection() {
               letterSpacing: "-0.03em",
             }}
           >
-            AI Researcher
+            <Typewriter text="AI Researcher" delay={200} />
             <br />
             <span
               style={{
