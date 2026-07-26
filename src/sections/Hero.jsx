@@ -272,7 +272,7 @@ export default function HeroSection() {
               letterSpacing: "-0.03em",
             }}
           >
-            <Typewriter text="AI Researcher" delay={200} />
+            <Typewriter text="AI ENGINEER" delay={200} />
             <br />
             <span
               style={{
@@ -282,7 +282,7 @@ export default function HeroSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              MERN STACK ENGINEER
+              MEDICAL VISION ENGINEER
             </span>
           </h1>
 
