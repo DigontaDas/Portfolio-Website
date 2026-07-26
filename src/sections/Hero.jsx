@@ -282,7 +282,7 @@ export default function HeroSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              MEDICAL VISION ENGINEER
+              MEDICAL VISION RESEARCHER
             </span>
           </h1>
 
