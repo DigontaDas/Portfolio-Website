@@ -64,40 +64,11 @@ const Contact = () => {
 
 
     return (
-        <section className="c-space my-20" id="contact" style={{ background: '#080c14' }}>
+        <section className="c-space my-20" id="contact">
             {alert.show && <Alert {...alert} />}
-            <div className="relative min-h-screen flex items-center justify-center flex-col overflow-hidden">
-                {/* Ambient glows matched to Hero/banner palette (navy base, cyan + violet bloom) */}
-                <div
-                    className="absolute pointer-events-none"
-                    style={{
-                        top: '-12%',
-                        right: '-10%',
-                        width: '55%',
-                        height: '55%',
-                        background: 'radial-gradient(ellipse, rgba(0,180,220,0.10) 0%, transparent 70%)',
-                        zIndex: 0,
-                    }}
-                />
-                <div
-                    className="absolute pointer-events-none"
-                    style={{
-                        bottom: '-12%',
-                        left: '-8%',
-                        width: '55%',
-                        height: '55%',
-                        background: 'radial-gradient(ellipse, rgba(140,60,230,0.10) 0%, transparent 70%)',
-                        zIndex: 0,
-                    }}
-                />
-
-                <img
-                    src="/assets/terminal.png"
-                    alt="terminal-bg"
-                    className="absolute inset-0 min-h-screen w-full object-cover"
-                    style={{ opacity: 0.9, mixBlendMode: 'screen', zIndex: 1 }}
-                />
-                <div className="contact-container relative" style={{ zIndex: 2 }}>
+            <div  className="relative min-h-screen flex items-center justify-center flex-col">
+                <img src="/assets/terminal.png" alt="terminal-bg" className="absolute inset-0 min-h-screen" />
+                <div className="contact-container">
                     <h3 className="head-text">Let's talk</h3>
                     <p className="text-lg text-white-600 mt-3">
                         If you want to work with Computer Vision or Need someone for Frontend Development, I'm here to help.
