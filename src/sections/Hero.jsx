@@ -272,7 +272,7 @@ export default function HeroSection() {
               letterSpacing: "-0.03em",
             }}
           >
-            <Typewriter text="AI ENGINEER" delay={200} />
+            <Typewriter text="APPLIED AI ENGINEER" delay={200} />
             <br />
             <span
               style={{
