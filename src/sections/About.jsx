@@ -15,8 +15,32 @@ const About = () => {
         }, 2000);
     };
     return (
-        <section className="c-space my-20" id="about">
-            <div className="grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full">
+        <section className="c-space my-20 relative" id="about" style={{ background: '#080c14' }}>
+            {/* Ambient glows matched to Hero/banner palette (navy base, cyan + violet bloom) */}
+            <div
+                className="absolute pointer-events-none"
+                style={{
+                    top: '-10%',
+                    left: '-8%',
+                    width: '55%',
+                    height: '55%',
+                    background: 'radial-gradient(ellipse, rgba(0,180,220,0.10) 0%, transparent 70%)',
+                    zIndex: 0,
+                }}
+            />
+            <div
+                className="absolute pointer-events-none"
+                style={{
+                    bottom: '-10%',
+                    right: '-8%',
+                    width: '50%',
+                    height: '50%',
+                    background: 'radial-gradient(ellipse, rgba(140,60,230,0.09) 0%, transparent 70%)',
+                    zIndex: 0,
+                }}
+            />
+
+            <div className="relative grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full" style={{ zIndex: 1 }}>
                 <div className="col-span-1 xl:row-span-3">
                     <div className="grid-container">
                         <img src="/assets/grid1.png" alt="grid-1" className="w-full sm:h-276px h-fit object-contain" />
