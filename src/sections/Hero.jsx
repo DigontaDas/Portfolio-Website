@@ -417,16 +417,14 @@ export default function HeroSection() {
 
           {/* Headline */}
           <h1
-            className="font-black leading-none mb-4"
+            className="font-black leading-tight mb-4"
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "clamp(2.8rem, 6vw, 5rem)",
+              fontSize: "clamp(2.4rem, 5.5vw, 4.4rem)",
               color: "#e8f4f6",
               letterSpacing: "-0.03em",
             }}
           >
-            <Typewriter text="APPLIED AI ENGINEER" delay={300} />
-            <br />
             <span
               style={{
                 background:
@@ -435,7 +433,7 @@ export default function HeroSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              MEDICAL VISION RESEARCHER
+              <Typewriter text="MEDICAL AND IMAGE PROCESSING RESEARCHER" delay={90} />
             </span>
           </h1>
 
