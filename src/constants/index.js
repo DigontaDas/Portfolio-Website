@@ -31,12 +31,6 @@ export const myProjects = [
             'Designed volumetric tiling for memory-efficient processing of heavy 3.5 GB scans. Engineered Hounsfield Unit (HU) normalization and Hybrid Combo Loss (Dice + BCE) to completely resolve empty-mask collapse, producing clinician-ready stenosis risk scores.',
         href: 'https://github.com/DigontaDas/Efficient-3D-Tiled-CNN-Architecture.git',
         texture: null,
-        logo: '/assets/project-logo1.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
         spotlight: '/assets/spotlight1.png',
         tags: [
             {
@@ -147,14 +141,8 @@ export const myProjects = [
         desc: 'Infinity AI BuildFest 2026 Finalist. An offline-first maternal health platform engineered to serve 3M+ expecting mothers and 60K+ Community Health Workers across rural Bangladesh with zero cloud reliance.',
         subdue:
             'XGBoost risk model exported to ONNX (1 MB) achieving sub-200ms on-device inference on Android 8+; outbox-first SQLite sync stress-tested at 50 concurrent events with 100% deduplication; cascading Bangla AI chat with 6-stage safety filters.',
-        href: 'https://github.com/DigontaDas/MaSheba--AI.git',
-        texture: null,
-        logo: '/assets/project-logo2.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
+        href: 'https://youtu.be/jImLDadVTL0',
+        texture: '/textures/project/Project-masheba.mp4',
         spotlight: '/assets/spotlight2.png',
         tags: [
             {
@@ -176,12 +164,6 @@ export const myProjects = [
             'Demonstrated remarkable zero-shot cross-vendor generalization: DSC 0.8712 on ACDC and DSC 0.7512 on unseen M&Ms dataset, shrinking the cross-vendor clinical generalization gap to just 0.12.',
         href: 'https://github.com/DigontaDas/Hybrid-Model-on-Efficient-SE-Net.git',
         texture: null,
-        logo: '/assets/project-logo3.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
         spotlight: '/assets/spotlight3.png',
         tags: [
             {
@@ -203,12 +185,6 @@ export const myProjects = [
             'Engineered Express.js routes with locking mechanisms to prevent duplicated transactions; architected KYB vault for compliance data; integrated Supabase for real-time dashboard analytics.',
         href: 'https://github.com/DigontaDas/Clarity.git',
         texture: null,
-        logo: '/assets/project-logo1.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
         spotlight: '/assets/spotlight4.png',
         tags: [
             {
@@ -230,12 +206,6 @@ export const myProjects = [
             'Employs ChromaDB vector store paired with Ollama (LLaMA) for context-aware personalized query matching, orchestrated through a modular FastAPI backend and React frontend at zero API costs.',
         href: 'https://github.com/DigontaDas/Movie-Recommendation-AI.git',
         texture: null,
-        logo: '/assets/project-logo3.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
         spotlight: '/assets/spotlight3.png',
         tags: [
             {
@@ -255,14 +225,8 @@ export const myProjects = [
         desc: 'Deep convolutional neural network for multi-class dermatological condition classification, addressing subtle inter-class visual nuances across dermoscopic imagery.',
         subdue:
             'Trained on extensive clinical datasets with customized data augmentation pipelines; delivers high-sensitivity detection for malignant melanoma and pigmented lesions suitable for point-of-care screening.',
-        href: 'https://github.com/DigontaDas/Skin_Disease_AI.git',
-        texture: null,
-        logo: '/assets/project-logo2.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
+        href: 'https://youtu.be/_CaUvmTYreQ',
+        texture: '/textures/project/Project-skin-disease.mp4',
         spotlight: '/assets/spotlight4.png',
         tags: [
             {
@@ -284,12 +248,6 @@ export const myProjects = [
             'Implements a rigid protocol state machine preventing pre-incision surgical checklist bypass, containerized with FastAPI and immutable event audit logs.',
         href: 'https://github.com/DigontaDas/OT-Pre-Surgical-Safety-Gate',
         texture: null,
-        logo: '/assets/project-logo1.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
         spotlight: '/assets/spotlight1.png',
         tags: [
             {
@@ -306,12 +264,6 @@ export const myProjects = [
             'Calculates multi-variable symptom severity scoring with contraindication warnings, built on a containerized FastAPI microservices backend with medical knowledge graph indexing.',
         href: 'https://github.com/DigontaDas/REMEDY.git',
         texture: null,
-        logo: '/assets/project-logo2.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
         spotlight: '/assets/spotlight2.png',
         tags: [
             {
@@ -326,14 +278,8 @@ export const myProjects = [
         desc: 'High-throughput distributed backend ride-matching and route-clustering engine designed for dense urban electric vehicle pooling and fleet optimization.',
         subdue:
             'Dynamic passenger pairing algorithms optimizing travel detours and vehicle seating; battery state-of-charge routing heuristics to manage charging station turnaround.',
-        href: 'https://github.com/DigontaDas/Dhaka-Tesla-Pool.git',
-        texture: null,
-        logo: '/assets/project-logo3.png',
-        logoStyle: {
-            backgroundColor: '#13202F',
-            border: '0.2px solid #17293E',
-            boxShadow: '0px 0px 60px 0px #2F6DB54D',
-        },
+        href: 'https://www.loom.com/share/0df8fb0e447b4f529b1e2be2b1c44a53',
+        texture: '/textures/project/Project-dhaka-tesla.mp4',
         spotlight: '/assets/spotlight3.png',
         tags: [
             {

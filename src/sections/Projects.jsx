@@ -70,10 +70,14 @@ const Projects = () => {
                         <img src={currentProject.spotlight} alt="spotlight" className="w-full h-96 object-cover rounded-xl" />
                     </div>
 
-                    <div className="flex justify-between items-center z-10">
-                        <div className="p-3 backdrop-filter backdrop-blur-3xl w-fit rounded-lg" style={currentProject.logoStyle}>
-                            <img className="w-10 h-10 shadow-sm" src={currentProject.logo} alt="logo" />
-                        </div>
+                    <div className="flex justify-between items-center z-10 min-h-[56px]">
+                        {currentProject.logo ? (
+                            <div className="p-3 backdrop-filter backdrop-blur-3xl w-fit rounded-lg" style={currentProject.logoStyle || {}}>
+                                <img className="w-10 h-10 shadow-sm" src={currentProject.logo} alt="logo" />
+                            </div>
+                        ) : (
+                            <div />
+                        )}
 
                         {currentProject.texture ? (
                             <span className="px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
