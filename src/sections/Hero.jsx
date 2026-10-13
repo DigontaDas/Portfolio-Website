@@ -433,7 +433,7 @@ export default function HeroSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              <Typewriter text="MEDICAL AND IMAGE PROCESSING RESEARCHER" delay={90} />
+              <Typewriter text="MEDICAL IMAGE PROCESSING RESEARCHER & SOFTWARE ENGINEER" delay={90} />
             </span>
           </h1>
 
