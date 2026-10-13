@@ -259,9 +259,9 @@ export const myProjects = [
     },
     {
         title: 'REMEDY - Smart Healthcare Triage Engine',
-        desc: 'Intelligent medical diagnosis advisory platform that translates patient symptom descriptions into prioritized triage levels and recommended clinical interventions.',
+        desc: 'A health website for doctors and patients where patient can take suggestions from the doctors and also take prescription and medications',
         subdue:
-            'Calculates multi-variable symptom severity scoring with contraindication warnings, built on a containerized FastAPI microservices backend with medical knowledge graph indexing.',
+            'My first healthcare sector project of my academic course of DBMS using MySQL , this is an Amatuer project',
         href: 'https://github.com/DigontaDas/REMEDY.git',
         texture: null,
         spotlight: '/assets/spotlight2.png',
