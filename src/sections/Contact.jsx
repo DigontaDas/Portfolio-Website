@@ -148,26 +148,6 @@ const Contact = () => {
                                 digontadas0171@gmail.com
                             </a>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <a
-                                href="https://www.linkedin.com/in/digonta-das-836117241"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-lg bg-cyan-950/40 border border-cyan-500/30 flex items-center justify-center hover:bg-cyan-900/60 hover:border-cyan-400 transition-all"
-                                title="LinkedIn Profile"
-                            >
-                                <img src="/assets/linkedin.svg" alt="LinkedIn" className="w-4 h-4 filter invert" />
-                            </a>
-                            <a
-                                href="https://github.com/DigontaDas"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-lg bg-purple-950/40 border border-purple-500/30 flex items-center justify-center hover:bg-purple-900/60 hover:border-purple-400 transition-all"
-                                title="GitHub Profile"
-                            >
-                                <img src="/assets/github.svg" alt="GitHub" className="w-4 h-4 filter invert" />
-                            </a>
-                        </div>
                         <span>Dhaka, Bangladesh</span>
                     </div>
                 </div>
