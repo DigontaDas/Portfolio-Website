@@ -41,7 +41,7 @@ export default function HeroSection() {
           </span>
         </div>
 
-        {/* Name - Modern, Human, Editorial Typography Inspired by Top Web Portfolios */}
+        {/* 3D Name - Razor-Sharp, High-Impact Chiseled 3D Typography */}
         <div
           className="transition-transform duration-100 ease-out mb-4"
           style={{
@@ -51,14 +51,26 @@ export default function HeroSection() {
           }}
         >
           <h1
-            className="font-extrabold tracking-[-0.035em] leading-[1.08] select-text text-white"
+            className="font-black tracking-tight uppercase leading-none select-text"
             style={{
-              fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
-              fontSize: "clamp(3.2rem, 7.5vw, 6.2rem)",
+              fontFamily: "'Space Grotesk', 'Outfit', sans-serif",
+              fontSize: "clamp(3.4rem, 8.5vw, 6.8rem)",
+              color: "#ffffff",
               WebkitFontSmoothing: "antialiased",
               MozOsxFontSmoothing: "grayscale",
               textRendering: "optimizeLegibility",
-              textShadow: "0 10px 30px rgba(0, 0, 0, 0.7)",
+              /* Razor-sharp 3D stepped extrusion with zero blur radius */
+              textShadow: `
+                0 1px 0 #d9e2ec,
+                0 2px 0 #bcccdc,
+                0 3px 0 #9fb3c8,
+                0 4px 0 #829ab1,
+                0 5px 0 #627d98,
+                0 6px 0 #486581,
+                0 7px 0 #334e68,
+                0 8px 0 #102a43,
+                0 10px 16px rgba(0, 0, 0, 0.85)
+              `,
             }}
           >
             Digonta Das
