@@ -75,9 +75,9 @@ const About = () => {
                                     </a>
                                 </div>
                             </div>
-                            <p className="text-xs font-mono text-cyan-400 mb-2">AI Engineer & Computer Vision Researcher</p>
+                            <p className="text-xs font-mono text-cyan-400 mb-2">Full Stack Developer & AI Engineer</p>
                             <p className="grid-subtext">
-                                Leading research in volumetric 3D Tiled CNNs for coronary stenosis detection and hybrid edge segmentation models. Passionate about bringing intelligent clinical models to resource-constrained environments.
+                                Architecting high-performance web applications and scalable AI systems. Passionate about modern full-stack development, cloud microservices, and practical machine learning solutions.
                             </p>
                         </div>
                     </div>
@@ -91,7 +91,7 @@ const About = () => {
                             <span className="text-xs font-mono px-2 py-0.5 rounded border border-purple-500/30 bg-purple-950/30 text-purple-300">Production Ready</span>
                         </div>
                         <p className="grid-subtext">
-                            Specialized toolkit spanning medical deep learning, computer vision, full-stack architectures, and local RAG pipelines.
+                            Specialized toolkit spanning full-stack web architectures, deep learning models, computer vision, and scalable AI infrastructure.
                         </p>
 
                         <div className="space-y-3 mt-1">

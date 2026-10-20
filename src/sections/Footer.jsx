@@ -4,7 +4,7 @@ const Footer = () => {
             <div className="text-slate-400 text-xs sm:text-sm flex items-center gap-3">
                 <span className="font-outfit font-semibold text-white">Digonta Das</span>
                 <span className="text-slate-600">|</span>
-                <span>AI Engineer & Medical Vision Researcher</span>
+                <span>Full Stack Developer & AI Engineer</span>
             </div>
 
             <div className="flex items-center gap-3">

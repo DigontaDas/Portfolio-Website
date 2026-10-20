@@ -41,14 +41,14 @@ export default function HeroSection() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
           </span>
           <span className="text-[11px] font-mono tracking-widest text-cyan-200 uppercase font-semibold">
-            BRAC University CSE • AI & Medical Imaging Researcher
+            BRAC University CSE • Full Stack Developer & AI Engineer
           </span>
         </div>
 
         {/* Creative Monospace Tagline */}
         <p className="text-xs sm:text-sm font-mono tracking-[0.3em] uppercase mb-3 text-cyan-300 font-bold flex items-center gap-2">
           <span className="text-cyan-500/60 font-mono">//</span>
-          <span>PORTFOLIO & CLINICAL RESEARCH ARCHIVE</span>
+          <span>FULL STACK & AI ENGINEERING ARCHIVE</span>
           <span className="text-cyan-500/60 font-mono">//</span>
         </p>
 
@@ -97,24 +97,24 @@ export default function HeroSection() {
               textShadow: "0 2px 10px rgba(0, 220, 240, 0.35)",
             }}
           >
-            AI Engineer <span className="text-purple-400 font-sans mx-1">•</span> Medical Image Processing Researcher
+            Full Stack Developer <span className="text-purple-400 font-sans mx-1">•</span> AI Engineer
           </h2>
           <span className="h-[1px] flex-1 max-w-[60px] sm:max-w-[100px] bg-gradient-to-l from-transparent to-cyan-400/80" />
         </div>
 
         {/* Technical Summary Description */}
         <p className="max-w-2xl text-sm sm:text-base leading-relaxed text-slate-200 font-sans mb-8">
-          Leading clinical AI research in <span className="text-white font-semibold">3D Volumetric Tiled-CNNs</span> for coronary artery blockage detection. Specialized in medical imaging pipelines, multi-modal MRI segmentation, and production AI platforms.
+          Architecting robust <span className="text-white font-semibold">Full Stack Web Applications</span> and intelligent <span className="text-white font-semibold">AI Systems</span>. Specialized in modern React/Next.js architectures, scalable backend services, and production deep learning pipelines.
         </p>
 
-        {/* Creative Clinical Focus Telemetry Chips - No Emojis */}
+        {/* Creative Full Stack & AI Focus Telemetry Chips - No Emojis */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 mb-10 max-w-3xl">
           {[
-            "Volumetric 3D CNN",
-            "Ibrahim Cardiac CT Scans",
-            "HU Normalization & Loss",
-            "Cross-Vendor MRI Generalization",
-            "PyTorch & CUDA Pipelines",
+            "Full Stack Development",
+            "AI & Deep Learning",
+            "React & Next.js",
+            "Node.js & Python",
+            "Cloud & Scalable APIs",
           ].map((label) => (
             <div
               key={label}
@@ -135,7 +135,7 @@ export default function HeroSection() {
               fontFamily: "'Space Grotesk', sans-serif",
             }}
           >
-            <span>Explore Research & Projects</span>
+            <span>Explore Projects</span>
             <span className="text-cyan-300 font-mono">→</span>
           </a>
 
