@@ -2,8 +2,9 @@
 
 @layer base {
   :root {
-    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
-    --font-heading: 'Outfit', sans-serif;
+    --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-inter: 'Inter', sans-serif;
+    --font-heading: 'Plus Jakarta Sans', 'Outfit', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-space: 'Space Grotesk', sans-serif;
 
@@ -51,6 +52,8 @@
 }
 
 @theme {
+  --font-inter: 'Inter', sans-serif;
+  --font-sans: 'Inter', 'Plus Jakarta Sans', sans-serif;
   --font-generalsans: 'Plus Jakarta Sans', sans-serif;
   --font-outfit: 'Outfit', sans-serif;
   --font-space: 'Space Grotesk', sans-serif;

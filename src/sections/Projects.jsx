@@ -55,14 +55,13 @@ const Projects = () => {
             {/* Header */}
             <div className="flex justify-between items-end flex-wrap gap-4 mb-8">
                 <div>
-                    <span className="subhead-text">// FEATURED PORTFOLIO WORK</span>
+                    <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400 font-sans">Featured Portfolio Work</span>
                     <h2 className="head-text mt-1">Research & Engineering Projects</h2>
                     <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl font-sans">
-                        Deep learning pipelines, volumetric clinical segmentation, and production full-stack systems.
+                        Deep learning pipelines, full-stack systems, and production architectures.
                     </p>
                 </div>
-                <div className="text-cyan-300 font-mono text-xs px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                <div className="text-slate-300 font-sans text-xs px-3.5 py-1.5 rounded-full bg-slate-900/60 border border-slate-700/60 flex items-center gap-2">
                     <span>Project <span className="text-white font-semibold">{selectedProjectIndex + 1}</span> of {projectCount}</span>
                 </div>
             </div>

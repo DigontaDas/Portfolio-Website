@@ -16,10 +16,10 @@ const About = () => {
         <section className="c-space my-24 relative z-10" id="about">
             {/* Section Header */}
             <div className="mb-12">
-                <span className="subhead-text">// RESEARCHER & ENGINEER</span>
+                <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400 font-sans">Background & Skills</span>
                 <h2 className="head-text mt-1">About Me & Expertise</h2>
                 <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl font-sans">
-                    Blending deep clinical AI research in 3D volumetric segmentation with scalable, high-performance web systems.
+                    Blending modern full-stack web architectures with machine learning models and production systems.
                 </p>
             </div>
 
@@ -155,7 +155,6 @@ const About = () => {
 
                             <a href="#contact" className="block mt-5">
                                 <button className="w-full py-3 px-5 rounded-xl font-medium text-sm text-white flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 shadow-lg shadow-cyan-950 transition-all duration-300">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                                     <span>Get in Touch for Opportunities</span>
                                 </button>
                             </a>

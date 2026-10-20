@@ -72,17 +72,16 @@ const Contact = () => {
                 <div className="w-full max-w-2xl ocean-card rounded-3xl sm:p-12 p-6 border border-cyan-500/20 shadow-2xl relative z-10">
                     <div className="flex items-center justify-between border-b border-slate-800/80 pb-5 mb-8">
                         <div>
-                            <span className="subhead-text">// INITIATE TRANSMISSION</span>
+                            <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400 font-sans">Get in Touch</span>
                             <h2 className="head-text text-3xl sm:text-4xl mt-1">Let's Connect</h2>
                         </div>
-                        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono text-cyan-300">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                            <span>Response within 24h</span>
+                        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/60 border border-slate-700/60 text-xs font-sans text-slate-300">
+                            <span>Open to full-time roles & collaborations</span>
                         </div>
                     </div>
 
                     <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed mb-8">
-                        Open for full-time AI/ML and Computer Vision roles, research collaborations, or engineering ventures.
+                        Open for full-time Full Stack Engineering and AI/ML opportunities, technical collaborations, and ambitious projects.
                     </p>
 
                     <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col space-y-6">
