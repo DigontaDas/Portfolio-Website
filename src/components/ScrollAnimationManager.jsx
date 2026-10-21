@@ -16,8 +16,10 @@ export default function ScrollAnimationManager() {
       const sections = [
         { id: 'home', name: '01 SURFACE' },
         { id: 'about', name: '02 ABOUT' },
-        { id: 'projects', name: '03 WORK' },
-        { id: 'contact', name: '04 CONTACT' },
+        { id: 'skills', name: '03 SKILLS' },
+        { id: 'architecture', name: '04 SYSTEMS' },
+        { id: 'projects', name: '05 WORK' },
+        { id: 'contact', name: '06 CONTACT' },
       ];
 
       for (let i = sections.length - 1; i >= 0; i--) {

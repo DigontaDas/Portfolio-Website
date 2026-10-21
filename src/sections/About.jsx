@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import Globe from 'react-globe.gl';
 
+const quickFacts = [
+    { label: 'Primary Stack', value: 'Python · FastAPI · PostgreSQL' },
+    { label: 'AI Focus', value: 'RAG · LangGraph · Whisper · 3D CV' },
+    { label: 'Infra', value: 'Docker · Pytest · GitHub Actions' },
+];
+
 const About = () => {
     const [hasCopied, setHasCopied] = useState(false);
 
@@ -16,114 +22,95 @@ const About = () => {
         <section className="c-space my-24 relative z-10" id="about">
             {/* Section Header */}
             <div className="mb-12">
-                <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400 font-sans">Background & Skills</span>
-                <h2 className="head-text mt-1">About Me & Expertise</h2>
+                <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400 font-sans">Background & Focus</span>
+                <h2 className="head-text mt-1">About Me</h2>
                 <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl font-sans">
-                    Blending modern full-stack web architectures with machine learning models and production systems.
+                    Python-first backend engineering meets production AI: type-safe APIs, relational data, and intelligent systems.
                 </p>
             </div>
 
-            <div className="grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-6 h-full">
+            <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 grid-flow-row-dense gap-6 h-full">
                 {/* 1. Main Profile Card with User Image (IMG_0452.PNG) */}
-                <div className="col-span-1 xl:row-span-3">
+                <div className="md:col-span-2 xl:col-span-2">
                     <div className="grid-container group">
-                        <div className="relative w-full rounded-2xl overflow-hidden border border-cyan-500/25 bg-gradient-to-b from-cyan-950/30 via-slate-900/60 to-purple-950/40 p-4 flex flex-col items-center">
-                            {/* Ambient Glow behind portrait */}
-                            <div className="absolute -top-12 -left-12 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
-                            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-purple-500/25 rounded-full blur-3xl pointer-events-none" />
+                        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
+                            {/* Portrait */}
+                            <div className="relative shrink-0 rounded-2xl overflow-hidden border border-cyan-500/25 bg-gradient-to-b from-cyan-950/30 via-slate-900/60 to-purple-950/40 p-3 flex flex-col items-center">
+                                {/* Ambient Glow behind portrait */}
+                                <div className="absolute -top-12 -left-12 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
+                                <div className="absolute -bottom-12 -right-12 w-40 h-40 bg-purple-500/25 rounded-full blur-3xl pointer-events-none" />
 
-                            {/* User Photo */}
-                            <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-2xl overflow-hidden border-2 border-cyan-400/40 shadow-2xl shadow-cyan-500/20 group-hover:border-purple-400/60 group-hover:shadow-purple-500/30 transition-all duration-500">
-                                <img
-                                    src="/assets/IMG_0452.PNG"
-                                    alt="Digonta Das"
-                                    className="w-full h-full object-cover object-top filter contrast-[1.03] brightness-[1.02] group-hover:scale-105 transition-transform duration-700 ease-out"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 via-transparent to-transparent pointer-events-none" />
-                            </div>
-
-                            {/* Verified Badge */}
-                            <div className="mt-4 flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-950/40 backdrop-blur-md">
-                                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                                <span className="text-[11px] font-mono tracking-wider text-cyan-200 uppercase">
-                                    BRAC University CSE Graduate
-                                </span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="flex items-center justify-between mb-1">
-                                <h3 className="grid-headtext text-2xl font-bold text-white">
-                                    Digonta Das
-                                </h3>
-                                <div className="flex items-center gap-2">
-                                    <a
-                                        href="https://www.linkedin.com/in/digonta-das-836117241"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-xs font-mono px-2.5 py-1 rounded-lg border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 hover:border-cyan-400 hover:text-white transition-all flex items-center gap-1"
-                                    >
-                                        LinkedIn ↗
-                                    </a>
-                                    <a
-                                        href="/Digonta_CV.pdf"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-xs font-mono px-2.5 py-1 rounded-lg border border-purple-500/30 bg-purple-950/40 text-purple-300 hover:border-purple-400 hover:text-white transition-all flex items-center gap-1"
-                                    >
-                                        CV PDF ↗
-                                    </a>
+                                <div className="relative w-44 h-52 sm:w-48 sm:h-60 rounded-xl overflow-hidden border-2 border-cyan-400/40 shadow-2xl shadow-cyan-500/20 group-hover:border-purple-400/60 group-hover:shadow-purple-500/30 transition-all duration-500">
+                                    <img
+                                        src="/assets/IMG_0452.PNG"
+                                        alt="Digonta Das"
+                                        className="w-full h-full object-cover object-top filter contrast-[1.03] brightness-[1.02] group-hover:scale-105 transition-transform duration-700 ease-out"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 via-transparent to-transparent pointer-events-none" />
                                 </div>
-                            </div>
-                            <p className="text-xs font-mono text-cyan-400 mb-2">Full Stack Developer & AI Engineer</p>
-                            <p className="grid-subtext">
-                                Architecting high-performance web applications and scalable AI systems. Passionate about modern full-stack development, cloud microservices, and practical machine learning solutions.
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
-                {/* 2. Tech Stack & Matrix */}
-                <div className="col-span-1 xl:row-span-3">
-                    <div className="grid-container">
-                        <div className="flex items-center justify-between">
-                            <p className="grid-headtext mb-0">Core Tech Matrix</p>
-                            <span className="text-xs font-mono px-2 py-0.5 rounded border border-purple-500/30 bg-purple-950/30 text-purple-300">Production Ready</span>
-                        </div>
-                        <p className="grid-subtext">
-                            Specialized toolkit spanning full-stack web architectures, deep learning models, computer vision, and scalable AI infrastructure.
-                        </p>
-
-                        <div className="space-y-3 mt-1">
-                            <div>
-                                <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-semibold">Deep Learning & Vision</span>
-                                <div className="flex flex-wrap gap-1.5 mt-1.5">
-                                    {['PyTorch', 'TensorFlow', '3D CNN', 'U-Net', 'ResNet', 'MobileNetV2', 'ONNX', 'XGBoost', 'HU Normalization'].map(tech => (
-                                        <span key={tech} className="px-2.5 py-1 text-xs font-mono rounded-md bg-cyan-950/30 text-cyan-200 border border-cyan-500/20 hover:border-cyan-400/50 transition-colors">
-                                            {tech}
-                                        </span>
-                                    ))}
+                                <div className="relative mt-3 flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-950/40 backdrop-blur-md">
+                                    <span className="w-2 h-2 rounded-full bg-cyan-400" />
+                                    <span className="text-[10px] font-mono tracking-wider text-cyan-200 uppercase">
+                                        BRAC University CSE
+                                    </span>
                                 </div>
                             </div>
 
-                            <div>
-                                <span className="text-[11px] font-mono uppercase tracking-wider text-purple-400 font-semibold">Full Stack & Systems</span>
-                                <div className="flex flex-wrap gap-1.5 mt-1.5">
-                                    {['React', 'Next.js', 'FastAPI', 'Node.js', 'Express', 'PostgreSQL', 'Supabase', 'Tailwind CSS'].map(tech => (
-                                        <span key={tech} className="px-2.5 py-1 text-xs font-mono rounded-md bg-purple-950/30 text-purple-200 border border-purple-500/20 hover:border-purple-400/50 transition-colors">
-                                            {tech}
-                                        </span>
-                                    ))}
+                            {/* Bio */}
+                            <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between flex-wrap gap-3 mb-1">
+                                    <h3 className="grid-headtext text-2xl font-bold text-white mb-0">
+                                        Digonta Das
+                                    </h3>
+                                    <div className="flex items-center gap-2">
+                                        <a
+                                            href="https://www.linkedin.com/in/digonta-das-836117241"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs font-mono px-2.5 py-1 rounded-lg border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 hover:border-cyan-400 hover:text-white transition-all flex items-center gap-1"
+                                        >
+                                            LinkedIn ↗
+                                        </a>
+                                        <a
+                                            href="/Digonta_CV.pdf"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs font-mono px-2.5 py-1 rounded-lg border border-purple-500/30 bg-purple-950/40 text-purple-300 hover:border-purple-400 hover:text-white transition-all flex items-center gap-1"
+                                        >
+                                            CV PDF ↗
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                                <p className="text-xs font-mono text-cyan-400 mb-4">Software Engineer (Python & AI Systems)</p>
 
-                            <div>
-                                <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-400 font-semibold">NLP & LLM Infrastructure</span>
-                                <div className="flex flex-wrap gap-1.5 mt-1.5">
-                                    {['ChromaDB', 'Sentence Transformers', 'LangChain', 'RAG Pipelines', 'Ollama (LLaMA)', 'Whisper API'].map(tech => (
-                                        <span key={tech} className="px-2.5 py-1 text-xs font-mono rounded-md bg-indigo-950/30 text-indigo-200 border border-indigo-500/20 hover:border-indigo-400/50 transition-colors">
-                                            {tech}
-                                        </span>
+                                <p className="grid-subtext">
+                                    I am a Software and AI Engineer specializing in Python-first backend architectures and
+                                    intelligent systems. While I began my journey building full-stack applications across the
+                                    JavaScript ecosystem, I now focus on designing high-performance, type-safe Python backends
+                                    using <span className="text-cyan-300 font-semibold">FastAPI, PostgreSQL, and Docker</span>.
+                                </p>
+                                <p className="grid-subtext mt-3">
+                                    My work bridges the gap between traditional backend software engineering (RESTful API
+                                    design, relational database modeling, authentication, and automated testing) and
+                                    production AI, including{' '}
+                                    <span className="text-purple-300 font-semibold">
+                                        Multi-Agent workflows (LangGraph), RAG pipelines, Speech AI (Whisper), and 3D Medical
+                                        Computer Vision
+                                    </span>.
+                                </p>
+
+                                <div className="grid sm:grid-cols-3 gap-2.5 mt-5">
+                                    {quickFacts.map((fact) => (
+                                        <div
+                                            key={fact.label}
+                                            className="px-3 py-2.5 rounded-xl bg-slate-900/50 border border-slate-700/50 hover:border-cyan-500/40 transition-colors"
+                                        >
+                                            <span className="block text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                                                {fact.label}
+                                            </span>
+                                            <span className="block text-xs font-medium text-slate-200 mt-0.5">{fact.value}</span>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
@@ -131,8 +118,8 @@ const About = () => {
                     </div>
                 </div>
 
-                {/* 3. Global Collaboration & Timezone Flexibility (Globe) */}
-                <div className="col-span-1 xl:row-span-4">
+                {/* 2. Global Collaboration & Timezone Flexibility (Globe) */}
+                <div className="col-span-1">
                     <div className="grid-container flex flex-col justify-between">
                         <div className="rounded-3xl w-full sm:h-[326px] h-fit flex justify-center items-center">
                             <Globe
@@ -162,8 +149,8 @@ const About = () => {
                     </div>
                 </div>
 
-                {/* 4. Research & Engineering Philosophy */}
-                <div className="xl:col-span-2 xl:row-span-3">
+                {/* 3. Research & Engineering Philosophy */}
+                <div className="md:col-span-2 xl:col-span-2">
                     <div className="grid-container">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/30 border border-cyan-400/30 flex items-center justify-center text-cyan-300 font-mono text-sm font-bold">
@@ -183,7 +170,7 @@ const About = () => {
                             <div className="p-3 rounded-xl bg-cyan-950/20 border border-cyan-500/15">
                                 <span className="text-xs font-mono text-cyan-300 font-semibold">Infinity AI BuildFest 2026 Finalist</span>
                                 <p className="text-xs text-slate-400 mt-1">
-                                    Team Lead on MaSheba AI — offline-first maternal healthcare platform reaching 3M+ mothers with on-device ONNX inference under 200ms.
+                                    Team Lead on MaSheba AI: offline-first maternal healthcare platform reaching 3M+ mothers with on-device ONNX inference under 200ms.
                                 </p>
                             </div>
                             <div className="p-3 rounded-xl bg-purple-950/20 border border-purple-500/15">
@@ -196,8 +183,8 @@ const About = () => {
                     </div>
                 </div>
 
-                {/* 5. Direct Contact & Copy Email */}
-                <div className="xl:col-span-1 xl:row-span-2">
+                {/* 4. Direct Contact & Copy Email */}
+                <div className="col-span-1">
                     <div className="grid-container justify-center items-center text-center">
                         <div>
                             <span className="text-xs font-mono uppercase tracking-widest text-slate-400">Direct Inquiries</span>

@@ -37,7 +37,7 @@ export default function HeroSection() {
         {/* Clean, Modern Status Badge - No AI Beeping Dot */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-700/60 bg-slate-900/60 backdrop-blur-md mb-8 hover:border-slate-500/80 transition-all shadow-sm">
           <span className="text-xs font-sans text-slate-300 font-medium tracking-wide">
-            BRAC University CSE <span className="text-slate-600 mx-1.5">•</span> Full Stack Developer & AI Engineer
+            BRAC University CSE <span className="text-slate-600 mx-1.5">•</span> Software Engineer (Python & AI Systems)
           </span>
         </div>
 
@@ -84,7 +84,7 @@ export default function HeroSection() {
             fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
           }}
         >
-          Full Stack Developer <span className="text-cyan-400 font-light mx-1">&amp;</span> AI Engineer
+          Software Engineer <span className="text-cyan-400 font-light mx-1">&amp;</span> AI Engineer
         </h2>
 
         {/* Technical Summary Description */}
@@ -94,17 +94,17 @@ export default function HeroSection() {
             fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
           }}
         >
-          Architecting robust full-stack web applications and intelligent AI systems. Specialized in modern React and Next.js architectures, scalable backend services, and production deep learning pipelines.
+          Building scalable <span className="text-cyan-300 font-medium">FastAPI</span> systems, <span className="text-purple-300 font-medium">agentic workflows</span> &amp; <span className="text-blue-300 font-medium">deep learning pipelines</span>. Type-safe Python backends on PostgreSQL and Docker, powering production RAG, speech AI and 3D medical computer vision.
         </p>
 
         {/* Clean Pill Tags - No AI Beeping Dots */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 mb-10 max-w-2xl">
           {[
-            "Full Stack Development",
-            "AI & Deep Learning",
-            "React & Next.js",
-            "Node.js & Python",
-            "Cloud & Scalable APIs",
+            "Python & FastAPI",
+            "PostgreSQL & PGVector",
+            "RAG & LangGraph Agents",
+            "PyTorch & 3D Vision",
+            "Docker & Pytest",
           ].map((label) => (
             <span
               key={label}

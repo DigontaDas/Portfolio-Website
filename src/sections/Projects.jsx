@@ -58,7 +58,7 @@ const Projects = () => {
                     <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400 font-sans">Featured Portfolio Work</span>
                     <h2 className="head-text mt-1">Research & Engineering Projects</h2>
                     <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl font-sans">
-                        Deep learning pipelines, full-stack systems, and production architectures.
+                        Deep learning pipelines, Python backend systems, and production AI architectures.
                     </p>
                 </div>
                 <div className="text-slate-300 font-sans text-xs px-3.5 py-1.5 rounded-full bg-slate-900/60 border border-slate-700/60 flex items-center gap-2">

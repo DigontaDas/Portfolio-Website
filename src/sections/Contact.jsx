@@ -81,7 +81,7 @@ const Contact = () => {
                     </div>
 
                     <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed mb-8">
-                        Open for full-time Full Stack Engineering and AI/ML opportunities, technical collaborations, and ambitious projects.
+                        Open for full-time Software Engineering, Python Backend and AI/ML opportunities, technical collaborations, and ambitious projects.
                     </p>
 
                     <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col space-y-6">
