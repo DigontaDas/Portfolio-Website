@@ -2,9 +2,9 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
     --font-inter: 'Inter', sans-serif;
-    --font-heading: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+    --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-space: 'Space Grotesk', sans-serif;
 
@@ -35,7 +35,7 @@
     padding: 0;
   }
 
-  /* Custom sleek scrollbar with dark ocean-purple glow */
+  /* Custom sleek scrollbar with ocean-cyan to purple glow */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -53,9 +53,9 @@
 
 @theme {
   --font-inter: 'Inter', sans-serif;
-  --font-sans: 'Inter', 'Plus Jakarta Sans', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
   --font-generalsans: 'Plus Jakarta Sans', sans-serif;
-  --font-outfit: 'Outfit', sans-serif;
+  --font-outfit: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   --font-space: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -86,99 +86,132 @@
   }
 
   .head-text {
-    font-family: 'Outfit', sans-serif;
-    letter-spacing: -0.02em;
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.025em;
     @apply sm:text-4xl text-3xl font-extrabold text-white;
   }
 
   .subhead-text {
-    font-family: 'Space Grotesk', sans-serif;
-    @apply text-sm uppercase tracking-widest text-cyan-400 font-semibold;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    @apply text-xs uppercase tracking-widest text-cyan-400 font-bold;
   }
 
   .text-gray_gradient {
     @apply text-slate-200;
   }
 
+  /* ========================================================
+     PREMIUM FROSTED GLASS CARDS
+     Deep glassmorphism with subtle specular top edge,
+     tactile shadows, and smooth micro-animations
+     ======================================================== */
   .ocean-card {
-    background: linear-gradient(145deg, rgba(7, 12, 36, 0.75) 0%, rgba(18, 12, 44, 0.65) 100%);
-    border: 1px solid rgba(0, 220, 240, 0.15);
-    backdrop-filter: blur(16px);
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(0, 220, 240, 0.08);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba(8, 14, 38, 0.68) 0%,
+      rgba(17, 12, 42, 0.58) 50%,
+      rgba(5, 8, 22, 0.76) 100%
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(0, 220, 240, 0.18);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 20px 50px -12px rgba(2, 6, 23, 0.8),
+      0 0 25px -5px rgba(0, 220, 240, 0.06);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ocean-card:hover {
-    border-color: rgba(168, 85, 247, 0.45);
-    box-shadow: 0 16px 50px -10px rgba(0, 0, 0, 0.8), 0 0 35px 0px rgba(168, 85, 247, 0.2);
-    transform: translateY(-2px);
+    border-color: rgba(168, 85, 247, 0.5);
+    border-top-color: rgba(255, 255, 255, 0.32);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      0 25px 60px -10px rgba(0, 0, 0, 0.85),
+      0 0 35px rgba(168, 85, 247, 0.22);
+    transform: translateY(-4px);
   }
 
   .grid-container {
     @apply w-full h-full rounded-2xl sm:p-7 p-5 flex flex-col gap-5;
-    background: linear-gradient(155deg, rgba(6, 10, 30, 0.82) 0%, rgba(20, 11, 48, 0.75) 100%);
+    position: relative;
+    background: linear-gradient(
+      140deg,
+      rgba(7, 12, 34, 0.74) 0%,
+      rgba(18, 11, 45, 0.64) 52%,
+      rgba(5, 8, 22, 0.82) 100%
+    );
+    backdrop-filter: blur(20px) saturate(175%);
+    -webkit-backdrop-filter: blur(20px) saturate(175%);
     border: 1px solid rgba(0, 220, 240, 0.18);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    transition: all 0.3s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 18px 45px -10px rgba(0, 0, 0, 0.75),
+      inset 0 0 20px rgba(0, 220, 240, 0.02);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .grid-container:hover {
-    border-color: rgba(168, 85, 247, 0.4);
-    box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.75), 0 0 30px rgba(139, 92, 246, 0.15);
+    border-color: rgba(168, 85, 247, 0.48);
+    border-top-color: rgba(255, 255, 255, 0.3);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 24px 55px -10px rgba(0, 0, 0, 0.82),
+      0 0 32px rgba(139, 92, 246, 0.2);
+    transform: translateY(-4px);
   }
 
   .grid-headtext {
-    font-family: 'Outfit', sans-serif;
-    letter-spacing: -0.01em;
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.015em;
     @apply text-xl font-bold mb-2 text-white;
   }
 
   .grid-subtext {
-    @apply text-slate-400 text-sm sm:text-base leading-relaxed;
+    @apply text-slate-300 text-sm sm:text-base leading-relaxed;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   .copy-container {
-    @apply cursor-pointer flex justify-center items-center gap-2 px-4 py-2.5 rounded-xl border border-cyan-500/20 bg-cyan-950/20 hover:border-purple-500/40 hover:bg-purple-950/30 transition-all;
+    @apply cursor-pointer flex justify-center items-center gap-2 px-4 py-2.5 rounded-xl border border-cyan-500/25 bg-cyan-950/30 hover:border-purple-500/50 hover:bg-purple-950/40 transition-all;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .btn {
     @apply flex gap-3 items-center justify-center cursor-pointer px-6 py-3 rounded-xl transition-all duration-300 active:scale-95 text-white font-medium;
-    background: linear-gradient(135deg, rgba(0, 220, 240, 0.18) 0%, rgba(139, 92, 246, 0.25) 100%);
+    background: linear-gradient(135deg, rgba(0, 220, 240, 0.2) 0%, rgba(139, 92, 246, 0.28) 100%);
     border: 1px solid rgba(0, 220, 240, 0.35);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow: 0 0 20px rgba(0, 220, 240, 0.15);
   }
 
   .btn:hover {
-    background: linear-gradient(135deg, rgba(0, 220, 240, 0.3) 0%, rgba(139, 92, 246, 0.4) 100%);
-    border-color: rgba(168, 85, 247, 0.6);
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
-  }
-
-  .btn-ping {
-    @apply animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75;
-  }
-
-  .btn-ping_dot {
-    @apply relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400;
+    background: linear-gradient(135deg, rgba(0, 220, 240, 0.32) 0%, rgba(139, 92, 246, 0.45) 100%);
+    border-color: rgba(168, 85, 247, 0.65);
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.35);
   }
 
   .field-label {
-    font-family: 'Space Grotesk', sans-serif;
-    @apply text-xs uppercase tracking-wider text-slate-300 font-semibold;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    @apply text-xs uppercase tracking-wider text-slate-300 font-bold;
   }
 
   .field-input {
     @apply w-full px-5 py-3.5 rounded-xl text-white placeholder:text-slate-500 text-base focus:outline-none transition-all;
-    background: rgba(8, 12, 32, 0.7);
-    border: 1px solid rgba(0, 220, 240, 0.18);
+    background: rgba(8, 12, 32, 0.75);
+    border: 1px solid rgba(0, 220, 240, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .field-input:focus {
     border-color: #00dcf0;
-    box-shadow: 0 0 25px rgba(0, 220, 240, 0.25), 0 0 10px rgba(139, 92, 246, 0.2);
-    background: rgba(12, 17, 44, 0.85);
+    box-shadow: 0 0 25px rgba(0, 220, 240, 0.28), 0 0 10px rgba(139, 92, 246, 0.25);
+    background: rgba(12, 17, 44, 0.9);
   }
 
   .field-btn {
@@ -195,37 +228,29 @@
 
   .social-icon {
     @apply w-11 h-11 rounded-full flex justify-center items-center transition-all duration-300;
-    background: rgba(9, 14, 38, 0.8);
-    border: 1px solid rgba(0, 220, 240, 0.2);
+    background: rgba(9, 14, 38, 0.85);
+    border: 1px solid rgba(0, 220, 240, 0.22);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .social-icon:hover {
     border-color: #a855f7;
-    background: rgba(30, 16, 60, 0.9);
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+    background: rgba(30, 16, 60, 0.92);
+    box-shadow: 0 0 22px rgba(168, 85, 247, 0.45);
     transform: translateY(-3px);
   }
 }
 
-/* Rain & Ocean pulse glow keyframes */
-@keyframes ocean-glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 15px rgba(0, 220, 240, 0.3));
-  }
-  50% {
-    filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.5));
-  }
-}
-
-.ocean-glow-anim {
-  animation: ocean-glow 6s infinite ease-in-out;
-}
-
-/* Scroll Animation Reveal Classes */
+/* ========================================================
+   SCROLL REVEAL MICRO-ANIMATION
+   Smooth upward reveal with cubic-bezier easing
+   ======================================================== */
 .scroll-reveal-target {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -233,4 +258,3 @@
   opacity: 1;
   transform: translateY(0);
 }
-

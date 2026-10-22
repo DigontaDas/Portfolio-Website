@@ -52,7 +52,7 @@ export default function ScrollAnimationManager() {
       });
     }, observerOptions);
 
-    const revealElements = document.querySelectorAll('.grid-container, .ocean-card, .head-text, .subhead-text');
+    const revealElements = document.querySelectorAll('.grid-container, .ocean-card, .origami-card, .head-text, .subhead-text');
     revealElements.forEach((el) => {
       el.classList.add('scroll-reveal-target');
       observer.observe(el);

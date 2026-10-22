@@ -34,14 +34,15 @@ export default function HeroSection() {
       {/* Main Content - Centered in the middle of the screen */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center justify-center text-center">
         
-        {/* Clean, Modern Status Badge - No AI Beeping Dot */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-700/60 bg-slate-900/60 backdrop-blur-md mb-8 hover:border-slate-500/80 transition-all shadow-sm">
-          <span className="text-xs font-sans text-slate-300 font-medium tracking-wide">
-            BRAC University CSE <span className="text-slate-600 mx-1.5">•</span> Software Engineer (Python & AI Systems)
+        {/* Clean Modern Status Badge */}
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-slate-900/70 backdrop-blur-md mb-8 hover:border-cyan-400/60 transition-all shadow-lg shadow-cyan-950/40">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00dcf0] animate-pulse" />
+          <span className="text-xs font-sans text-slate-200 font-medium tracking-wide">
+            BRAC University CSE <span className="text-slate-600 mx-1.5">•</span> Software Engineer (Python &amp; AI Systems)
           </span>
         </div>
 
-        {/* 3D Name - Razor-Sharp, High-Impact Chiseled 3D Typography */}
+        {/* Name - Harmonious, Elegant Typography with Origami Paper Sheen */}
         <div
           className="transition-transform duration-100 ease-out mb-4"
           style={{
@@ -51,26 +52,15 @@ export default function HeroSection() {
           }}
         >
           <h1
-            className="font-black tracking-tight uppercase leading-none select-text"
+            className="font-black tracking-tight leading-none select-text"
             style={{
-              fontFamily: "'Space Grotesk', 'Outfit', sans-serif",
-              fontSize: "clamp(3.4rem, 8.5vw, 6.8rem)",
-              color: "#ffffff",
-              WebkitFontSmoothing: "antialiased",
-              MozOsxFontSmoothing: "grayscale",
-              textRendering: "optimizeLegibility",
-              /* Razor-sharp 3D stepped extrusion with zero blur radius */
-              textShadow: `
-                0 1px 0 #d9e2ec,
-                0 2px 0 #bcccdc,
-                0 3px 0 #9fb3c8,
-                0 4px 0 #829ab1,
-                0 5px 0 #627d98,
-                0 6px 0 #486581,
-                0 7px 0 #334e68,
-                0 8px 0 #102a43,
-                0 10px 16px rgba(0, 0, 0, 0.85)
-              `,
+              fontFamily: "'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif",
+              fontSize: "clamp(3.4rem, 8.5vw, 6.6rem)",
+              letterSpacing: "-0.03em",
+              background: "linear-gradient(135deg, #ffffff 0%, #f1f5f9 28%, #7dd3fc 62%, #c084fc 95%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              filter: "drop-shadow(0 14px 35px rgba(0, 220, 240, 0.22)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9))",
             }}
           >
             Digonta Das
@@ -81,7 +71,7 @@ export default function HeroSection() {
         <h2
           className="text-xl sm:text-2xl md:text-3xl font-semibold text-slate-200 tracking-tight font-sans mb-5"
           style={{
-            fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+            fontFamily: "'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif",
           }}
         >
           Software Engineer <span className="text-cyan-400 font-light mx-1">&amp;</span> AI Engineer
@@ -91,13 +81,13 @@ export default function HeroSection() {
         <p
           className="max-w-2xl text-base sm:text-lg leading-relaxed text-slate-300 font-sans font-normal mb-8"
           style={{
-            fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+            fontFamily: "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif",
           }}
         >
           Building scalable <span className="text-cyan-300 font-medium">FastAPI</span> systems, <span className="text-purple-300 font-medium">agentic workflows</span> &amp; <span className="text-blue-300 font-medium">deep learning pipelines</span>. Type-safe Python backends on PostgreSQL and Docker, powering production RAG, speech AI and 3D medical computer vision.
         </p>
 
-        {/* Clean Pill Tags - No AI Beeping Dots */}
+        {/* Origami Folded Pill Badges */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 mb-10 max-w-2xl">
           {[
             "Python & FastAPI",
@@ -108,7 +98,7 @@ export default function HeroSection() {
           ].map((label) => (
             <span
               key={label}
-              className="px-4 py-1.5 rounded-full text-xs sm:text-sm font-sans font-medium text-slate-300 bg-slate-900/70 border border-slate-800 hover:border-slate-600 hover:text-white backdrop-blur-md transition-all shadow-sm"
+              className="px-4 py-1.5 rounded-full text-xs sm:text-sm font-sans font-medium text-slate-200 bg-slate-900/80 border border-cyan-500/25 hover:border-cyan-400/60 hover:text-white backdrop-blur-md transition-all shadow-sm shadow-cyan-950/20"
             >
               {label}
             </span>
