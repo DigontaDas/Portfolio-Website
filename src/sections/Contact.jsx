@@ -16,27 +16,27 @@ const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+
+        const templateParams = {
+            from_name: form.name,
+            name: form.name,
+            to_name: 'Digonta Das',
+            from_email: form.email,
+            email: form.email,
+            reply_to: form.email,
+            to_email: 'digontadas0171@gmail.com',
+            message: form.message,
+        };
+
+        const serviceId = import.meta.env.VITE_APP_EMAILJS_SERVICE_ID;
+        const templateId = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID;
+        const publicKey = import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY;
+
         try {
-            if (
-                import.meta.env.VITE_APP_EMAILJS_SERVICE_ID &&
-                import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID &&
-                import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
-            ) {
-                await emailjs.send(
-                    import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
-                    import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
-                    {
-                        from_name: form.name,
-                        to_name: 'Digonta Das',
-                        from_email: form.email,
-                        to_email: 'digontadas0171@gmail.com',
-                        message: form.message,
-                    },
-                    import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
-                );
+            if (serviceId && templateId && publicKey) {
+                await emailjs.send(serviceId, templateId, templateParams, publicKey);
             } else {
-                // Fallback simulation if env variables are pending
-                await new Promise((resolve) => setTimeout(resolve, 800));
+                throw new Error('EmailJS credentials missing');
             }
 
             setLoading(false);
@@ -51,12 +51,23 @@ const Contact = () => {
             }, 3500);
         } catch (error) {
             setLoading(false);
-            console.error(error);
+            console.error('EmailJS error:', error);
+
+            // Resilient fallback: open pre-filled mailto so no inquiry is ever lost
+            const subject = encodeURIComponent(`Portfolio Inquiry from ${form.name || 'Visitor'}`);
+            const body = encodeURIComponent(
+                `${form.message}\n\n---\nFrom: ${form.name} (${form.email})`
+            );
+            window.location.href = `mailto:digontadas0171@gmail.com?subject=${subject}&body=${body}`;
+
             showAlert({
                 show: true,
-                text: 'Could not send directly. Please email me at digontadas0171@gmail.com',
+                text: 'Direct relay failed. Opening your default email client to send to digontadas0171@gmail.com...',
                 type: 'danger',
             });
+            setTimeout(() => {
+                hideAlert(false);
+            }, 5000);
         }
     };
 
