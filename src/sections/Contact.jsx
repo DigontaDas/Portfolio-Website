@@ -28,30 +28,69 @@ const Contact = () => {
             message: form.message,
         };
 
-        const serviceId = import.meta.env.VITE_APP_EMAILJS_SERVICE_ID || 'service_o0vx3f8';
-        const templateId = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID || 'template_swru8h8';
-        const publicKey = import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY || 'XG9GQP5_MCKKBdMKD';
+        // Enforce the valid template ID even if Vite cached the old template_vnm26s7
+        const envTemplate = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID;
+        const templateId =
+            envTemplate && envTemplate !== 'template_vnm26s7'
+                ? envTemplate
+                : 'template_swru8h8';
+        const serviceId =
+            import.meta.env.VITE_APP_EMAILJS_SERVICE_ID || 'service_o0vx3f8';
+        const publicKey =
+            import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY || 'XG9GQP5_MCKKBdMKD';
 
         try {
-            if (serviceId && templateId && publicKey) {
-                await emailjs.send(serviceId, templateId, templateParams, publicKey);
-            } else {
-                throw new Error('EmailJS credentials missing');
+            let sent = false;
+
+            // Step 1: Attempt standard EmailJS SDK dispatch
+            try {
+                if (emailjs.init) {
+                    emailjs.init({ publicKey });
+                }
+                const res = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+                if (res?.status === 200 || res?.text === 'OK') {
+                    sent = true;
+                }
+            } catch (sdkError) {
+                console.warn('EmailJS SDK dispatch failed, attempting direct REST endpoint fallback...', sdkError);
+
+                // Step 2: Direct REST fetch fallback (bypasses any browser SDK quirks)
+                const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        service_id: serviceId,
+                        template_id: templateId,
+                        user_id: publicKey,
+                        template_params: templateParams,
+                    }),
+                });
+
+                if (response.ok) {
+                    sent = true;
+                } else {
+                    const errorDetail = await response.text();
+                    throw new Error(errorDetail || `Status ${response.status}`);
+                }
             }
 
-            setLoading(false);
-            showAlert({
-                show: true,
-                text: 'Your message has been sent successfully!',
-                type: 'success',
-            });
-            setForm({ name: '', email: '', message: '' });
-            setTimeout(() => {
-                hideAlert(false);
-            }, 3500);
+            if (sent) {
+                setLoading(false);
+                showAlert({
+                    show: true,
+                    text: 'Your message has been sent successfully!',
+                    type: 'success',
+                });
+                setForm({ name: '', email: '', message: '' });
+                setTimeout(() => {
+                    hideAlert(false);
+                }, 3500);
+            }
         } catch (error) {
             setLoading(false);
-            console.error('EmailJS error:', error);
+            const errorMsg =
+                error?.text || error?.message || (typeof error === 'string' ? error : 'Relay unavailable');
+            console.error('Email dispatch error:', errorMsg);
 
             // Resilient fallback: open pre-filled mailto so no inquiry is ever lost
             const subject = encodeURIComponent(`Portfolio Inquiry from ${form.name || 'Visitor'}`);
@@ -62,12 +101,12 @@ const Contact = () => {
 
             showAlert({
                 show: true,
-                text: 'Direct relay failed. Opening your default email client to send to digontadas0171@gmail.com...',
+                text: `Direct relay failed (${errorMsg}). Opening your email client to send to digontadas0171@gmail.com...`,
                 type: 'danger',
             });
             setTimeout(() => {
                 hideAlert(false);
-            }, 5000);
+            }, 6000);
         }
     };
 
