@@ -28,9 +28,9 @@ const Contact = () => {
             message: form.message,
         };
 
-        const serviceId = import.meta.env.VITE_APP_EMAILJS_SERVICE_ID;
-        const templateId = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID;
-        const publicKey = import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY;
+        const serviceId = import.meta.env.VITE_APP_EMAILJS_SERVICE_ID || 'service_o0vx3f8';
+        const templateId = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID || 'template_swru8h8';
+        const publicKey = import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY || 'XG9GQP5_MCKKBdMKD';
 
         try {
             if (serviceId && templateId && publicKey) {
