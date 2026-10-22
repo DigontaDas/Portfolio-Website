@@ -42,25 +42,28 @@ export default function HeroSection() {
           </span>
         </div>
 
-        {/* Name - Harmonious, Elegant Typography with Origami Paper Sheen */}
+        {/* Name - Clean, High-End Typography with Perfect Letterforms */}
         <div
           className="transition-transform duration-100 ease-out mb-4"
           style={{
             transform: `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`,
             transformStyle: "preserve-3d",
             willChange: "transform",
+            filter: "drop-shadow(0 14px 35px rgba(0, 220, 240, 0.22)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9))",
           }}
         >
           <h1
-            className="font-black tracking-tight leading-none select-text"
+            className="font-extrabold select-text inline-block"
             style={{
-              fontFamily: "'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif",
-              fontSize: "clamp(3.4rem, 8.5vw, 6.6rem)",
-              letterSpacing: "-0.03em",
-              background: "linear-gradient(135deg, #ffffff 0%, #f1f5f9 28%, #7dd3fc 62%, #c084fc 95%)",
+              fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+              fontSize: "clamp(3.3rem, 8.2vw, 6.4rem)",
+              lineHeight: 1.2,
+              paddingBottom: "0.14em",
+              paddingTop: "0.02em",
+              letterSpacing: "-0.01em",
+              background: "linear-gradient(135deg, #ffffff 0%, #f1f5f9 28%, #7dd3fc 65%, #c084fc 95%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 14px 35px rgba(0, 220, 240, 0.22)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9))",
             }}
           >
             Digonta Das
@@ -87,14 +90,14 @@ export default function HeroSection() {
           Building scalable <span className="text-cyan-300 font-medium">FastAPI</span> systems, <span className="text-purple-300 font-medium">agentic workflows</span> &amp; <span className="text-blue-300 font-medium">deep learning pipelines</span>. Type-safe Python backends on PostgreSQL and Docker, powering production RAG, speech AI and 3D medical computer vision.
         </p>
 
-        {/* Origami Folded Pill Badges */}
+        {/* Tech Pill Badges */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 mb-10 max-w-2xl">
           {[
             "Python & FastAPI",
             "PostgreSQL & PGVector",
-            "RAG & LangGraph Agents",
+            "RAG & LangChain",
             "PyTorch & 3D Vision",
-            "Docker & Pytest",
+            "Docker & CI/CD",
           ].map((label) => (
             <span
               key={label}

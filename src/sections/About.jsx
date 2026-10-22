@@ -3,8 +3,8 @@ import Globe from 'react-globe.gl';
 
 const quickFacts = [
     { label: 'Primary Stack', value: 'Python · FastAPI · PostgreSQL' },
-    { label: 'AI Focus', value: 'RAG · LangGraph · Whisper · 3D CV' },
-    { label: 'Infra', value: 'Docker · Pytest · GitHub Actions' },
+    { label: 'AI Focus', value: 'RAG · LangChain · Whisper · 3D CV' },
+    { label: 'Infra', value: 'Docker · CI/CD · GitHub Actions' },
 ];
 
 const About = () => {
@@ -95,7 +95,7 @@ const About = () => {
                                     design, relational database modeling, authentication, and automated testing) and
                                     production AI, including{' '}
                                     <span className="text-purple-300 font-semibold">
-                                        Multi-Agent workflows (LangGraph), RAG pipelines, Speech AI (Whisper), and 3D Medical
+                                        Agentic workflows (LangChain), RAG pipelines, Speech AI (Whisper), and 3D Medical
                                         Computer Vision
                                     </span>.
                                 </p>

@@ -42,24 +42,24 @@ const principles = [
     },
     {
         step: '03',
-        title: 'Containerized & Tested',
+        title: 'Containerized & CI/CD',
         accent: 'purple',
         body: (
             <>
-                Reproducible environments using <strong className="text-purple-200">Docker</strong>, automated endpoint
-                verification with <strong className="text-purple-200">Pytest</strong>, and{' '}
+                Reproducible environments using <strong className="text-purple-200">Docker</strong>, automated
+                verification with <strong className="text-purple-200">CI/CD</strong> pipelines, and{' '}
                 <strong className="text-purple-200">LangSmith / RAGAS</strong> for AI pipeline observability.
             </>
         ),
         code: [
-            'def test_search_returns_200(client):',
-            '    r = client.post("/search", json={...})',
-            '    assert r.status_code == 200',
+            '# GitHub Actions CI/CD pipeline:',
+            '- name: Build & Health Check',
+            '  run: docker compose up --build -d',
             '',
-            '$ docker compose up --build',
-            '$ pytest -q   # all green',
+            '$ git push origin main',
+            '$ # CI/CD: all pipeline checks passed',
         ],
-        tags: ['Docker', 'Pytest', 'LangSmith', 'RAGAS'],
+        tags: ['Docker', 'CI/CD', 'GitHub Actions', 'LangSmith'],
     },
 ];
 
