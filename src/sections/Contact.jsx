@@ -28,16 +28,16 @@ const Contact = () => {
             message: form.message,
         };
 
-        // Enforce the valid template ID even if Vite cached the old template_vnm26s7
+        // Production EmailJS credentials (verified and active)
+        const SERVICE_ID = 'service_o0vx3f8';
+        const TEMPLATE_ID = 'template_swru8h8';
+        const PUBLIC_KEY = 'XG9GQP5_MCKKBdMKD';
+
+        const serviceId = import.meta.env.VITE_APP_EMAILJS_SERVICE_ID || SERVICE_ID;
         const envTemplate = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID;
-        const templateId =
-            envTemplate && envTemplate !== 'template_vnm26s7'
-                ? envTemplate
-                : 'template_swru8h8';
-        const serviceId =
-            import.meta.env.VITE_APP_EMAILJS_SERVICE_ID || 'service_o0vx3f8';
-        const publicKey =
-            import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY || 'XG9GQP5_MCKKBdMKD';
+        // Enforce the verified template_swru8h8 on production/Vercel even if an old env var was set
+        const templateId = (envTemplate && envTemplate === TEMPLATE_ID) ? envTemplate : TEMPLATE_ID;
+        const publicKey = import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY || PUBLIC_KEY;
 
         try {
             let sent = false;
