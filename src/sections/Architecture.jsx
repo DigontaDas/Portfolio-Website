@@ -47,8 +47,8 @@ const principles = [
         body: (
             <>
                 Reproducible environments using <strong className="text-purple-200">Docker</strong>, automated
-                verification with <strong className="text-purple-200">CI/CD</strong> pipelines, and{' '}
-                <strong className="text-purple-200">LangSmith / RAGAS</strong> for AI pipeline observability.
+                verification with <strong className="text-purple-200">CI/CD</strong> pipelines
+                for AI pipeline observability.
             </>
         ),
         code: [
