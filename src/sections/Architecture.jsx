@@ -59,7 +59,7 @@ const principles = [
             '$ git push origin main',
             '$ # CI/CD: all pipeline checks passed',
         ],
-        tags: ['Docker', 'CI/CD', 'GitHub Actions', 'LangSmith'],
+        tags: ['Docker', 'CI/CD', 'GitHub Actions'],
     },
 ];
 
