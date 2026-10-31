@@ -148,7 +148,6 @@ export default function HeroSection() {
       </div>
 
       {/* Centered Scroll indicator */}
-      </div>
     </section>
   );
 }
