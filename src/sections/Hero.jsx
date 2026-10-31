@@ -152,9 +152,6 @@ export default function HeroSection() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-10"
         style={{ opacity: 0.7 }}
       >
-        <span className="text-xs tracking-wider text-slate-400 font-sans font-medium">
-          Scroll to explore
-        </span>
         <div className="w-[1.5px] h-8 bg-gradient-to-b from-cyan-400 via-cyan-400/40 to-transparent animate-pulse" />
       </div>
     </section>
