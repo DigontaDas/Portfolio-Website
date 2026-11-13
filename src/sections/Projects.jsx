@@ -1,4 +1,4 @@
-import { Suspense, useState, useRef } from 'react';
+import { Suspense, useState, useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls } from '@react-three/drei';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,18 @@ const projectCount = myProjects.length;
 const Projects = () => {
     const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
     const controlsRef = useRef(null);
+    const viewportRef = useRef(null);
+
+    useEffect(() => {
+        const el = viewportRef.current;
+        if (!el) return;
+        const handleWheel = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        };
+        el.addEventListener('wheel', handleWheel, { passive: false });
+        return () => el.removeEventListener('wheel', handleWheel);
+    }, []);
 
     const handleNavigation = (direction) => {
         setSelectedProjectIndex((prevIndex) => {
@@ -268,7 +280,11 @@ const Projects = () => {
                 </div>
 
                 {/* Right Card: Interactive 3D Demo Computer */}
-                <div className="ocean-card rounded-2xl h-[320px] sm:h-[420px] lg:h-full lg:min-h-[480px] relative overflow-hidden group">
+                <div
+                    ref={viewportRef}
+                    data-lenis-prevent
+                    className="ocean-card rounded-2xl h-[320px] sm:h-[420px] lg:h-full lg:min-h-[480px] relative overflow-hidden group overscroll-contain"
+                >
                     {/* Zoom / Reset Controls */}
                     <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 flex flex-col gap-1.5 bg-[#070c24]/90 backdrop-blur-md p-1.5 rounded-xl border border-cyan-500/20 shadow-xl">
                         <button

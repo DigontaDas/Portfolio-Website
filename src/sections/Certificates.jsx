@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Award, BookOpen, ExternalLink, Maximize2, X } from 'lucide-react';
 import { featuredCertificates, courseCertificates } from '../constants/index.js';
@@ -25,12 +26,15 @@ const Certificates = () => {
         if (selectedCert) {
             window.addEventListener('keydown', onKeyDown);
             window.__lenis?.stop();
+            document.documentElement.style.overflow = 'hidden';
         } else {
             window.__lenis?.start();
+            document.documentElement.style.overflow = '';
         }
         return () => {
             window.removeEventListener('keydown', onKeyDown);
             window.__lenis?.start();
+            document.documentElement.style.overflow = '';
         };
     }, [selectedCert]);
 
@@ -176,70 +180,74 @@ const Certificates = () => {
                 </div>
             </div>
 
-            {/* Interactive Lightbox Modal */}
-            <AnimatePresence>
-                {selectedCert && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        onClick={() => setSelectedCert(null)}
-                        className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
-                        data-lenis-prevent
-                    >
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.94, y: 16 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.94, y: 16 }}
-                            transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-4xl rounded-2xl bg-[#070c24] border border-cyan-500/35 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
-                        >
-                            {/* Modal Header */}
-                            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-slate-800">
-                                <div className="min-w-0">
-                                    <h4 className="font-outfit font-bold text-base sm:text-lg text-white truncate">
-                                        {selectedCert.title}
-                                    </h4>
-                                    <p className="text-xs font-mono text-cyan-300 truncate">
-                                        {selectedCert.issuer} · {selectedCert.date}
-                                        {selectedCert.credentialId ? ` · ${selectedCert.credentialId}` : ''}
-                                    </p>
-                                </div>
-                                <div className="flex items-center gap-2 shrink-0">
-                                    <a
-                                        href={selectedCert.file}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="px-3 py-1.5 rounded-lg text-xs font-mono bg-cyan-500/15 border border-cyan-400/40 text-cyan-200 hover:bg-cyan-500/25 hover:text-white transition-colors flex items-center gap-1.5"
-                                    >
-                                        <span>Open {selectedCert.fileType === 'pdf' ? 'PDF' : 'Image'}</span>
-                                        <ExternalLink className="w-3.5 h-3.5" />
-                                    </a>
-                                    <button
-                                        type="button"
-                                        onClick={() => setSelectedCert(null)}
-                                        aria-label="Close certificate preview"
-                                        className="p-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 transition-colors cursor-pointer"
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </button>
-                                </div>
-                            </div>
+            {/* Interactive Lightbox Modal rendered at body root to avoid section stacking context */}
+            {typeof document !== 'undefined' &&
+                createPortal(
+                    <AnimatePresence>
+                        {selectedCert && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                onClick={() => setSelectedCert(null)}
+                                className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+                                data-lenis-prevent
+                            >
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.94, y: 16 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.94, y: 16 }}
+                                    transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="w-full max-w-4xl rounded-2xl bg-[#070c24] border border-cyan-500/40 shadow-[0_25px_80px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col max-h-[90vh]"
+                                >
+                                    {/* Modal Header */}
+                                    <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-slate-800">
+                                        <div className="min-w-0">
+                                            <h4 className="font-outfit font-bold text-base sm:text-lg text-white truncate">
+                                                {selectedCert.title}
+                                            </h4>
+                                            <p className="text-xs font-mono text-cyan-300 truncate">
+                                                {selectedCert.issuer} · {selectedCert.date}
+                                                {selectedCert.credentialId ? ` · ${selectedCert.credentialId}` : ''}
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center gap-2 shrink-0">
+                                            <a
+                                                href={selectedCert.file}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="px-3 py-1.5 rounded-lg text-xs font-mono bg-cyan-500/15 border border-cyan-400/40 text-cyan-200 hover:bg-cyan-500/25 hover:text-white transition-colors flex items-center gap-1.5"
+                                            >
+                                                <span>Open {selectedCert.fileType === 'pdf' ? 'PDF' : 'Image'}</span>
+                                                <ExternalLink className="w-3.5 h-3.5" />
+                                            </a>
+                                            <button
+                                                type="button"
+                                                onClick={() => setSelectedCert(null)}
+                                                aria-label="Close certificate preview"
+                                                className="p-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 transition-colors cursor-pointer"
+                                            >
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
 
-                            {/* Modal Image */}
-                            <div className="p-3 sm:p-5 overflow-auto flex items-center justify-center bg-slate-950/80">
-                                <img
-                                    src={selectedCert.image}
-                                    alt={selectedCert.title}
-                                    className="max-h-[70vh] w-auto object-contain rounded-xl shadow-lg"
-                                />
-                            </div>
-                        </motion.div>
-                    </motion.div>
+                                    {/* Modal Image */}
+                                    <div className="p-3 sm:p-5 overflow-auto flex items-center justify-center bg-slate-950/90">
+                                        <img
+                                            src={selectedCert.image}
+                                            alt={selectedCert.title}
+                                            className="max-h-[74vh] w-auto object-contain rounded-xl shadow-lg"
+                                        />
+                                    </div>
+                                </motion.div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>,
+                    document.body
                 )}
-            </AnimatePresence>
         </section>
     );
 };

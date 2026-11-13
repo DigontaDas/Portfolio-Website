@@ -25,7 +25,17 @@ const About = () => {
         updateSize();
         const ro = new ResizeObserver(updateSize);
         ro.observe(el);
-        return () => ro.disconnect();
+
+        const handleWheel = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        };
+        el.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            ro.disconnect();
+            el.removeEventListener('wheel', handleWheel);
+        };
     }, []);
 
     const handleCopy = () => {
@@ -160,7 +170,8 @@ const About = () => {
                     <div className="grid-container flex flex-col justify-between overflow-hidden">
                         <div
                             ref={globeWrapRef}
-                            className="relative z-10 rounded-3xl w-full flex justify-center items-center overflow-hidden min-h-[240px] sm:min-h-[300px]"
+                            data-lenis-prevent
+                            className="relative z-10 rounded-3xl w-full flex justify-center items-center overflow-hidden min-h-[240px] sm:min-h-[300px] overscroll-contain"
                         >
                             <Globe
                                 height={globeSize}
