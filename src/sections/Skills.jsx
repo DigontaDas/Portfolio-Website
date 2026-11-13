@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const skillGroups = [
     {
         id: 'backend',
@@ -38,15 +40,17 @@ const skillGroups = [
     },
     {
         id: 'ai',
-        title: 'AI & Agentic Systems',
+        title: 'AI & LLM Systems',
         tier: 'Core',
         icon: '◎',
         accent: 'purple',
         span: '',
-        blurb: 'Retrieval, agents and evaluation for LLM-powered products.',
+        blurb: 'Retrieval, prompt engineering, LLMOps and local model serving.',
         skills: [
-            'LangChain',
             'Retrieval-Augmented Generation (RAG)',
+            'OpenAI API & Prompt Engineering',
+            'Hugging Face',
+            'LLMOps',
             'Model Context Protocol (MCP)',
             'RAGAS Evaluation',
             'WhisperAI',
@@ -131,44 +135,75 @@ const accentStyles = {
 
 const Skills = () => {
     return (
-        <section className="c-space my-24 relative z-10" id="skills">
+        <section className="c-space my-20 sm:my-24 relative z-10" id="skills">
             {/* Section Header */}
-            <div className="flex justify-between items-end flex-wrap gap-4 mb-10">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.6 }}
+                className="flex justify-between items-end flex-wrap gap-4 mb-10"
+            >
                 <div>
-                    <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400 font-sans">Python-First Toolkit</span>
+                    <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400 font-sans">
+                        Python-First Toolkit
+                    </span>
                     <h2 className="head-text mt-1">Skills Matrix</h2>
                     <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl font-sans">
-                        Real software engineering in Python: API design, data modeling, testing and deployment, with AI and deep learning built on top.
+                        API design, data modeling, testing and deployment, with AI and deep learning built on top.
                     </p>
                 </div>
-                <div className="flex items-center gap-2 text-[11px] font-mono">
-                    <span className="px-2.5 py-1 rounded-full border border-cyan-400/40 bg-cyan-950/40 text-cyan-200">Primary</span>
-                    <span className="px-2.5 py-1 rounded-full border border-slate-600/60 bg-slate-900/60 text-slate-300">Core</span>
-                    <span className="px-2.5 py-1 rounded-full border border-slate-700/60 bg-slate-900/40 text-slate-500">Secondary</span>
+                <div className="flex items-center flex-wrap gap-2 text-[11px] font-mono">
+                    <span className="px-2.5 py-1 rounded-full border border-cyan-400/40 bg-cyan-950/40 text-cyan-200">
+                        Primary
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full border border-slate-600/60 bg-slate-900/60 text-slate-300">
+                        Core
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full border border-slate-700/60 bg-slate-900/40 text-slate-500">
+                        Secondary
+                    </span>
                 </div>
-            </div>
+            </motion.div>
 
-            <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-                {skillGroups.map((group) => {
+            <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 sm:gap-6">
+                {skillGroups.map((group, idx) => {
                     const a = accentStyles[group.accent];
                     const isPrimary = group.tier === 'Primary';
                     return (
-                        <div key={group.id} className={`${group.span} ${isPrimary ? 'xl:col-span-2' : ''}`}>
-                            <div className={`grid-container relative overflow-hidden ${isPrimary ? 'border-cyan-400/40' : ''}`}>
-                                <div className={`absolute -top-16 -right-16 w-48 h-48 rounded-full blur-3xl pointer-events-none ${a.glow}`} />
+                        <motion.div
+                            key={group.id}
+                            initial={{ opacity: 0, y: 24 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.12 }}
+                            transition={{ duration: 0.45, delay: idx * 0.06 }}
+                            className={`${group.span} ${isPrimary ? 'xl:col-span-2' : ''}`}
+                        >
+                            <div
+                                className={`grid-container relative overflow-hidden ${
+                                    isPrimary ? 'border-cyan-400/40' : ''
+                                }`}
+                            >
+                                <div
+                                    className={`absolute -top-16 -right-16 w-48 h-48 rounded-full blur-3xl pointer-events-none ${a.glow}`}
+                                />
 
-                                <div className="relative flex items-start justify-between gap-3">
-                                    <div className="flex items-center gap-3">
-                                        <div className={`w-11 h-11 rounded-xl bg-gradient-to-br border flex items-center justify-center font-mono text-base font-bold ${a.icon}`}>
+                                <div className="relative z-10 flex items-start justify-between gap-3">
+                                    <div className="flex items-start sm:items-center gap-3 min-w-0">
+                                        <div
+                                            className={`w-11 h-11 shrink-0 whitespace-nowrap rounded-xl bg-gradient-to-br border flex items-center justify-center font-mono text-base font-bold leading-none ${a.icon}`}
+                                        >
                                             {group.icon}
                                         </div>
-                                        <div>
-                                            <p className="grid-headtext mb-0">{group.title}</p>
-                                            <p className="text-xs text-slate-400 font-sans">{group.blurb}</p>
+                                        <div className="min-w-0">
+                                            <p className="grid-headtext mb-0.5 leading-snug">{group.title}</p>
+                                            <p className="text-xs text-slate-400 font-sans leading-relaxed">
+                                                {group.blurb}
+                                            </p>
                                         </div>
                                     </div>
                                     <span
-                                        className={`shrink-0 text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border ${
+                                        className={`shrink-0 whitespace-nowrap text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border ${
                                             isPrimary
                                                 ? 'border-cyan-400/50 bg-cyan-950/50 text-cyan-200'
                                                 : 'border-slate-600/60 bg-slate-900/60 text-slate-300'
@@ -178,47 +213,56 @@ const Skills = () => {
                                     </span>
                                 </div>
 
-                                <div className="relative flex flex-wrap gap-2">
+                                <div className="relative z-10 flex flex-wrap gap-2">
                                     {group.skills.map((skill) => (
-                                        <span
+                                        <motion.span
                                             key={skill}
+                                            whileHover={{ y: -2, scale: 1.03 }}
                                             className={`px-3 py-1.5 font-mono rounded-lg border transition-colors ${
-                                                isPrimary ? 'text-[13px]' : 'text-xs'
+                                                isPrimary ? 'text-xs sm:text-[13px]' : 'text-xs'
                                             } ${a.chip}`}
                                         >
                                             {skill}
-                                        </span>
+                                        </motion.span>
                                     ))}
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     );
                 })}
 
                 {/* Secondary: Frontend as a decoupled presentation layer */}
-                <div className="md:col-span-2 xl:col-span-3">
-                    <div className="grid-container !flex-row flex-wrap items-center justify-between !gap-4 !py-4 opacity-90">
-                        <div className="flex items-center gap-3">
-                            <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border border-slate-700/60 bg-slate-900/40 text-slate-500">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.45, delay: 0.25 }}
+                    className="md:col-span-2 xl:col-span-3"
+                >
+                    <div className="grid-container flex-col sm:!flex-row items-start sm:items-center justify-between !gap-4 !py-4 opacity-95 overflow-hidden">
+                        <div className="relative z-10 flex items-start sm:items-center gap-3 min-w-0">
+                            <span className="shrink-0 whitespace-nowrap text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border border-slate-700/60 bg-slate-900/40 text-slate-400">
                                 {secondaryGroup.tier}
                             </span>
-                            <div>
-                                <p className="text-sm font-semibold text-slate-200 font-sans">{secondaryGroup.title}</p>
-                                <p className="text-xs text-slate-500 font-sans">{secondaryGroup.blurb}</p>
+                            <div className="min-w-0">
+                                <p className="text-sm font-semibold text-slate-200 font-sans">
+                                    {secondaryGroup.title}
+                                </p>
+                                <p className="text-xs text-slate-400 font-sans">{secondaryGroup.blurb}</p>
                             </div>
                         </div>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="relative z-10 flex flex-wrap gap-2">
                             {secondaryGroup.skills.map((skill) => (
                                 <span
                                     key={skill}
-                                    className="px-2.5 py-1 text-xs font-mono rounded-md bg-slate-900/60 text-slate-400 border border-slate-700/60 hover:text-slate-200 hover:border-slate-500 transition-colors"
+                                    className="px-2.5 py-1 text-xs font-mono rounded-md bg-slate-900/60 text-slate-300 border border-slate-700/60 hover:text-white hover:border-slate-500 transition-colors"
                                 >
                                     {skill}
                                 </span>
                             ))}
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );
