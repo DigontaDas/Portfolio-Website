@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, ArrowUpRight, Download } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download } from "lucide-react";
 
 const techBadges = [
   "Python & FastAPI",
@@ -69,7 +69,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent select-none pt-24 pb-14"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent select-none py-16"
     >
       {/* Subtle cosmic vignette */}
       <div
@@ -235,24 +235,6 @@ export default function HeroSection() {
           </div>
         </motion.div>
       </motion.div>
-
-      {/* Animated Scroll Cue */}
-      <motion.a
-        href="#about"
-        aria-label="Scroll to About section"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 0.85, y: 0 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
-        className="relative z-10 mt-6 flex flex-col items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-cyan-300 transition-colors"
-      >
-        <span className="tracking-widest uppercase">Scroll</span>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ArrowDown className="w-4 h-4 text-cyan-400" />
-        </motion.span>
-      </motion.a>
     </section>
   );
 }
