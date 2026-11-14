@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
-import Globe from 'react-globe.gl';
+import { useState, useRef, useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
+
+const Globe = lazy(() => import('react-globe.gl'));
 
 const quickFacts = [
     { label: 'Primary Stack', value: 'Python · FastAPI · PostgreSQL' },
@@ -12,6 +13,7 @@ const About = () => {
     const [hasCopied, setHasCopied] = useState(false);
     const globeWrapRef = useRef(null);
     const [globeSize, setGlobeSize] = useState(280);
+    const [showGlobe, setShowGlobe] = useState(false);
 
     useEffect(() => {
         const el = globeWrapRef.current;
@@ -26,6 +28,17 @@ const About = () => {
         const ro = new ResizeObserver(updateSize);
         ro.observe(el);
 
+        const io = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setShowGlobe(true);
+                    io.disconnect();
+                }
+            },
+            { rootMargin: '300px 0px' }
+        );
+        io.observe(el);
+
         const handleWheel = (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -34,6 +47,7 @@ const About = () => {
 
         return () => {
             ro.disconnect();
+            io.disconnect();
             el.removeEventListener('wheel', handleWheel);
         };
     }, []);
@@ -173,16 +187,26 @@ const About = () => {
                             data-lenis-prevent
                             className="relative z-10 rounded-3xl w-full flex justify-center items-center overflow-hidden min-h-[240px] sm:min-h-[300px] overscroll-contain"
                         >
-                            <Globe
-                                height={globeSize}
-                                width={globeSize}
-                                backgroundColor="rgba(0, 0, 0, 0)"
-                                backgroundImageOpacity={0.5}
-                                showAtmosphere
-                                showGraticules
-                                globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
-                                bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-                            />
+                            {showGlobe ? (
+                                <Suspense
+                                    fallback={
+                                        <div className="w-48 h-48 rounded-full border border-cyan-500/20 bg-cyan-950/20 animate-pulse" />
+                                    }
+                                >
+                                    <Globe
+                                        height={globeSize}
+                                        width={globeSize}
+                                        backgroundColor="rgba(0, 0, 0, 0)"
+                                        backgroundImageOpacity={0.5}
+                                        showAtmosphere
+                                        showGraticules
+                                        globeImageUrl="/textures/space/earth.jpg"
+                                        bumpImageUrl="/textures/space/earth_normal.jpg"
+                                    />
+                                </Suspense>
+                            ) : (
+                                <div className="w-48 h-48 rounded-full border border-cyan-500/20 bg-cyan-950/20 animate-pulse" />
+                            )}
                         </div>
 
                         <div className="relative z-10 mt-3">

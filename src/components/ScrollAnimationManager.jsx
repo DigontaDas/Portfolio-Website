@@ -1,21 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 
+const REVEAL_SELECTOR = '.grid-container, .ocean-card, .head-text, .subhead-text';
+
 export default function ScrollAnimationManager() {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const barRef = useRef(null);
 
   useEffect(() => {
-    // 1. Lenis Smooth Inertia Scroll
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktopPointer =
+      window.matchMedia('(pointer: fine)').matches && window.innerWidth >= 768;
+    const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // 1. Lenis Smooth Inertia Scroll (Desktop fine-pointer only; mobile keeps native momentum)
     let lenis = null;
     let rafId = null;
 
-    if (!prefersReducedMotion) {
+    if (!prefersReducedMotion && isDesktopPointer) {
       lenis = new Lenis({
-        duration: 1.15,
+        duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        touchMultiplier: 1.5,
       });
       window.__lenis = lenis;
 
@@ -26,55 +31,94 @@ export default function ScrollAnimationManager() {
       rafId = requestAnimationFrame(raf);
     }
 
-    // 2. Scroll Progress Tracker
-    const handleScroll = () => {
+    // 2. Compositor-only Scroll Progress Tracker (no React state re-renders)
+    const updateProgressBar = () => {
+      if (!barRef.current) return;
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const currentScroll = window.scrollY;
-      const progress = totalScroll > 0 ? (currentScroll / totalScroll) * 100 : 0;
-      setScrollProgress(progress);
+      const ratio = totalScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / totalScroll)) : 0;
+      barRef.current.style.transform = `scaleX(${ratio})`;
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    window.addEventListener('scroll', updateProgressBar, { passive: true });
+    updateProgressBar();
 
-    // 3. Interactive Cursor Spotlight Glow on Glass Cards
-    const handlePointerMove = (e) => {
-      const card = e.target.closest?.('.ocean-card, .grid-container');
+    // 3. Throttled Cursor Spotlight Glow on Desktop Hover Devices Only
+    let pendingSpotEvent = null;
+    let spotRafId = null;
+
+    const flushSpotlight = () => {
+      spotRafId = null;
+      const e = pendingSpotEvent;
+      if (!e) return;
+      const card = e.target?.closest?.('.ocean-card, .grid-container');
       if (!card) return;
       const rect = card.getBoundingClientRect();
       card.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
       card.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
     };
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
 
-    // 4. IntersectionObserver for Scroll-Reveal Animations
-    const observer = new IntersectionObserver(
+    const handlePointerMove = (e) => {
+      pendingSpotEvent = e;
+      if (!spotRafId) {
+        spotRafId = requestAnimationFrame(flushSpotlight);
+      }
+    };
+
+    if (hasHover) {
+      window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    }
+
+    // 4. IntersectionObserver + MutationObserver for Scroll Reveals (supports lazy sections)
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('scroll-in-view');
+            revealObserver.unobserve(entry.target);
           }
         });
       },
       {
         root: null,
-        rootMargin: '0px 0px -60px 0px',
-        threshold: 0.08,
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.06,
       }
     );
 
-    const revealElements = document.querySelectorAll(
-      '.grid-container, .ocean-card, .head-text, .subhead-text'
-    );
-    revealElements.forEach((el) => {
-      el.classList.add('scroll-reveal-target');
-      observer.observe(el);
+    const registerRevealNodes = (rootNode) => {
+      if (!rootNode || rootNode.nodeType !== 1) return;
+      if (rootNode.matches?.(REVEAL_SELECTOR) && !rootNode.classList.contains('scroll-in-view')) {
+        rootNode.classList.add('scroll-reveal-target');
+        revealObserver.observe(rootNode);
+      }
+      rootNode.querySelectorAll?.(REVEAL_SELECTOR).forEach((el) => {
+        if (!el.classList.contains('scroll-in-view')) {
+          el.classList.add('scroll-reveal-target');
+          revealObserver.observe(el);
+        }
+      });
+    };
+
+    registerRevealNodes(document.body);
+
+    const mutationObserver = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          registerRevealNodes(node);
+        }
+      }
     });
+    const mainRoot = document.querySelector('main') || document.body;
+    mutationObserver.observe(mainRoot, { childList: true, subtree: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('pointermove', handlePointerMove);
-      observer.disconnect();
+      window.removeEventListener('scroll', updateProgressBar);
+      if (hasHover) {
+        window.removeEventListener('pointermove', handlePointerMove);
+      }
+      if (spotRafId) cancelAnimationFrame(spotRafId);
+      revealObserver.disconnect();
+      mutationObserver.disconnect();
       if (rafId) cancelAnimationFrame(rafId);
       if (lenis) {
         lenis.destroy();
@@ -86,8 +130,9 @@ export default function ScrollAnimationManager() {
   return (
     <div className="fixed top-0 left-0 w-full h-[3px] z-50 pointer-events-none bg-slate-900/40">
       <div
-        className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 shadow-[0_0_12px_rgba(0,220,240,0.8)] transition-all duration-100 ease-out"
-        style={{ width: `${scrollProgress}%` }}
+        ref={barRef}
+        className="w-full h-full origin-left bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 shadow-[0_0_12px_rgba(0,220,240,0.8)] will-change-transform"
+        style={{ transform: 'scaleX(0)' }}
       />
     </div>
   );

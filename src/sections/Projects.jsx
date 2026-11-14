@@ -12,18 +12,33 @@ const projectCount = myProjects.length;
 
 const Projects = () => {
     const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+    const [isViewportActive, setIsViewportActive] = useState(false);
     const controlsRef = useRef(null);
     const viewportRef = useRef(null);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
     useEffect(() => {
         const el = viewportRef.current;
         if (!el) return;
+
         const handleWheel = (e) => {
             e.preventDefault();
             e.stopPropagation();
         };
         el.addEventListener('wheel', handleWheel, { passive: false });
-        return () => el.removeEventListener('wheel', handleWheel);
+
+        const io = new IntersectionObserver(
+            ([entry]) => {
+                setIsViewportActive(entry.isIntersecting);
+            },
+            { rootMargin: '240px 0px' }
+        );
+        io.observe(el);
+
+        return () => {
+            el.removeEventListener('wheel', handleWheel);
+            io.disconnect();
+        };
     }, []);
 
     const handleNavigation = (direction) => {
@@ -324,7 +339,14 @@ const Projects = () => {
                         </span>
                     </div>
 
-                    <Canvas>
+                    <Canvas
+                        frameloop={isViewportActive ? 'always' : 'demand'}
+                        dpr={isMobile ? [1, 1.25] : [1, 1.65]}
+                        gl={{
+                            antialias: !isMobile,
+                            powerPreference: isMobile ? 'default' : 'high-performance',
+                        }}
+                    >
                         <ambientLight intensity={Math.PI * 0.9} />
                         <directionalLight position={[10, 10, 5]} intensity={1.5} color="#00dcf0" />
                         <directionalLight position={[-10, 5, -5]} intensity={1.0} color="#a855f7" />

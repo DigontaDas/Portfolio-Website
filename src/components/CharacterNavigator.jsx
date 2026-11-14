@@ -54,7 +54,7 @@ function PixelPointerArrow({ isPinging }) {
   );
 }
 
-export default function CharacterNavigator() {
+export default function CharacterNavigator({ visible = true, docked = true }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [pingedIndex, setPingedIndex] = useState(null);
@@ -141,7 +141,9 @@ export default function CharacterNavigator() {
           setRailExpanded(false);
           setHoveredIndex(null);
         }}
-        className="fixed right-3 lg:right-5 top-1/2 -translate-y-1/2 z-50 flex items-center pointer-events-none select-none"
+        className={`fixed right-3 lg:right-5 top-1/2 -translate-y-1/2 z-50 flex items-center pointer-events-none select-none transition-opacity duration-500 ${
+          visible ? 'opacity-100' : 'opacity-0'
+        }`}
       >
         {/* Sliding 3D Satellite Companion + Directional Pointer */}
         <motion.div
@@ -172,11 +174,15 @@ export default function CharacterNavigator() {
             className="relative w-24 h-24 lg:w-28 lg:h-28 cursor-pointer focus:outline-none group"
           >
             <span className="absolute inset-3 rounded-full bg-gradient-to-tr from-cyan-500/20 via-blue-500/15 to-purple-500/25 blur-xl group-hover:blur-2xl transition-all pointer-events-none" />
-            <SatelliteAvatar3D
-              isHovered={railExpanded || hoveredIndex !== null}
-              pingKey={pingCount}
-              className="w-full h-full"
-            />
+            {docked ? (
+              <SatelliteAvatar3D
+                isHovered={railExpanded || hoveredIndex !== null}
+                pingKey={pingCount}
+                className="w-full h-full"
+              />
+            ) : (
+              <div data-satellite-dock="true" className="w-full h-full" />
+            )}
           </button>
 
           <PixelPointerArrow isPinging={pingedIndex !== null} />
@@ -262,7 +268,11 @@ export default function CharacterNavigator() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2.5 pointer-events-none select-none">
+    <div
+      className={`fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2.5 pointer-events-none select-none transition-opacity duration-500 ${
+        visible ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -317,14 +327,18 @@ export default function CharacterNavigator() {
         aria-label="Open satellite waypoint navigator"
         aria-expanded={mobileOpen}
         whileTap={{ scale: 0.94 }}
-        className="pointer-events-auto relative flex items-center gap-1 pr-3 pl-1 py-1 rounded-2xl bg-[#050816]/85 backdrop-blur-xl border border-cyan-400/40 shadow-[0_8px_28px_rgba(0,0,0,0.7)] cursor-pointer"
+        className="pointer-events-auto relative flex items-center gap-1 pr-3 pl-1 py-1 rounded-2xl bg-[#050816]/88 backdrop-blur-md border border-cyan-400/40 shadow-[0_8px_28px_rgba(0,0,0,0.7)] cursor-pointer"
       >
         <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-cyan-400 animate-beacon" />
-        <SatelliteAvatar3D
-          isHovered={mobileOpen}
-          pingKey={pingCount}
-          className="w-16 h-16 shrink-0"
-        />
+        {docked ? (
+          <SatelliteAvatar3D
+            isHovered={mobileOpen}
+            pingKey={pingCount}
+            className="w-16 h-16 shrink-0"
+          />
+        ) : (
+          <div data-satellite-dock="true" className="w-16 h-16 shrink-0" />
+        )}
         <div className="text-left">
           <span className="block text-[9px] font-mono uppercase tracking-wider text-cyan-400">
             {mobileOpen ? 'Close' : 'Satellite'}

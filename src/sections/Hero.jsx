@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Download } from "lucide-react";
 
@@ -37,34 +37,51 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 22, filter: "blur(6px)" },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: {
       type: "spring",
-      stiffness: 120,
-      damping: 18,
+      stiffness: 130,
+      damping: 20,
     },
   },
 };
 
 export default function HeroSection() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const tiltRef = useRef(null);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      setMousePos({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    const canTilt =
+      window.matchMedia("(pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!canTilt) return;
 
-  const tiltX = -mousePos.y * 6;
-  const tiltY = mousePos.x * 6;
+    let rafId = null;
+    let latestX = 0;
+    let latestY = 0;
+
+    const applyTilt = () => {
+      rafId = null;
+      if (!tiltRef.current) return;
+      const tiltX = (-latestY * 6).toFixed(2);
+      const tiltY = (latestX * 6).toFixed(2);
+      tiltRef.current.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    };
+
+    const handleMouseMove = (e) => {
+      latestX = (e.clientX / window.innerWidth - 0.5) * 2;
+      latestY = (e.clientY / window.innerHeight - 0.5) * 2;
+      if (!rafId) rafId = requestAnimationFrame(applyTilt);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   return (
     <section
@@ -101,12 +118,12 @@ export default function HeroSection() {
 
         {/* Name with 3D mouse tilt + animated gradient */}
         <motion.div
+          ref={tiltRef}
           variants={itemVariants}
           className="transition-transform duration-150 ease-out mb-3 sm:mb-4 w-full"
           style={{
-            transform: `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`,
+            transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
             transformStyle: "preserve-3d",
-            willChange: "transform",
             filter:
               "drop-shadow(0 14px 35px rgba(0, 220, 240, 0.22)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9))",
           }}

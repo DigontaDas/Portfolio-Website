@@ -1,7 +1,9 @@
-import { useRef, useMemo, Suspense } from 'react';
+import { useRef, useMemo, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
+
+useTexture.preload('/assets/digonta-full-avatar.png');
 
 /**
  * Procedural metallic solar cell grid texture for the 3D satellite wings.
@@ -74,6 +76,12 @@ function SatelliteModel({ isHovered, pingKey }) {
   const lastPingRef = useRef(pingKey);
 
   const solarTex = useMemo(() => createSolarPanelTexture(), []);
+
+  useEffect(() => {
+    return () => {
+      solarTex.dispose();
+    };
+  }, [solarTex]);
 
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime();
@@ -224,12 +232,18 @@ function SatelliteModel({ isHovered, pingKey }) {
 }
 
 export default function SatelliteAvatar3D({ isHovered = false, pingKey = 0, className = '' }) {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <div className={className}>
       <Canvas
-        dpr={[1, 1.75]}
+        dpr={isMobile ? [1, 1.25] : [1, 1.65]}
         camera={{ position: [0, 0.05, 4.4], fov: 42 }}
-        gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
+        gl={{
+          alpha: true,
+          antialias: !isMobile,
+          powerPreference: isMobile ? 'default' : 'high-performance',
+        }}
         style={{ background: 'transparent' }}
       >
         <ambientLight intensity={1.35} />
