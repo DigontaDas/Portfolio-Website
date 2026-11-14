@@ -18,27 +18,20 @@ const SectionFallback = ({ id, minHeight = "min-h-[320px]" }) => (
 );
 
 const App = () => {
-    const [flyStarted, setFlyStarted] = useState(false);
     const [preloaderDone, setPreloaderDone] = useState(false);
 
     return (
         <div className="relative min-h-screen bg-[#030614] text-[#e2e8f0] overflow-x-clip selection:bg-purple-600/30 selection:text-cyan-300">
-            {/* Initial Animated Loader: Name Logo + Avatar Satellite -> Flies to Side */}
+            {/* Initial Round Logo Preloader */}
             {!preloaderDone && (
-                <SpacePreloader
-                    onStartFly={() => setFlyStarted(true)}
-                    onComplete={() => setPreloaderDone(true)}
-                />
+                <SpacePreloader onComplete={() => setPreloaderDone(true)} />
             )}
 
             {/* Scroll Laser, Smooth Scroll & Cursor Spotlight */}
             <ScrollAnimationManager />
 
             {/* Constant Animated Side 3D Satellite Waypoint Navigator */}
-            <CharacterNavigator
-                visible={flyStarted || preloaderDone}
-                docked={preloaderDone}
-            />
+            <CharacterNavigator visible={preloaderDone} docked={true} />
 
             {/* 3D Milky Way, Earth & Moon Space Canvas */}
             <EarthSpaceCanvas />

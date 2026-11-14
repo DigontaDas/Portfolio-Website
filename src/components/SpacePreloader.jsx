@@ -1,37 +1,40 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import SatelliteAvatar3D from './SatelliteAvatar3D.jsx';
 
-export default function SpacePreloader({ onStartFly, onComplete }) {
-  const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState('loading'); // 'loading' | 'flying'
-  const [flyTarget, setFlyTarget] = useState({ x: 0, y: 0, scale: 0.55 });
-  const satBoxRef = useRef(null);
+const CIRCLE_RADIUS = 82;
+const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
+
+export default function SpacePreloader({ onComplete }) {
+  const [percent, setPercent] = useState(0);
+  const [isExiting, setIsExiting] = useState(false);
+  const ringRef = useRef(null);
+  const dotGroupRef = useRef(null);
   const completedRef = useRef(false);
 
-  const finishOnce = () => {
+  const triggerExit = () => {
     if (completedRef.current) return;
     completedRef.current = true;
-    onComplete?.();
+    setIsExiting(true);
   };
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
-      setProgress(100);
-      const t = setTimeout(finishOnce, 180);
+      if (ringRef.current) {
+        ringRef.current.style.strokeDashoffset = '0';
+      }
+      setPercent(100);
+      const t = setTimeout(triggerExit, 180);
       return () => clearTimeout(t);
     }
 
-    // Warm critical small brand assets immediately during loading
-    ['/assets/digonta-full-avatar.png', '/Logo.svg'].forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    // Preload logo image immediately
+    const logoImg = new Image();
+    logoImg.src = '/Logo.svg';
 
     const startTime = performance.now();
-    const minDuration = 1050; // Crisp initial showcase of Logo + Satellite Avatar
-    const maxDuration = 1850;
+    const duration = 1950; // Deliberate, unhurried circular sweep
+    const maxWait = 2800;
     let docReady = document.readyState === 'complete';
 
     const onWindowLoad = () => {
@@ -42,50 +45,43 @@ export default function SpacePreloader({ onStartFly, onComplete }) {
     }
 
     let rafId = null;
-    let flyTimeout = null;
+    let holdTimeout = null;
     let safetyFinish = null;
-
-    const launchFlight = () => {
-      const satEl = satBoxRef.current;
-      const dockEl = document.querySelector('[data-satellite-dock="true"]');
-
-      if (satEl && dockEl) {
-        const satRect = satEl.getBoundingClientRect();
-        const dockRect = dockEl.getBoundingClientRect();
-        const dx = dockRect.left + dockRect.width / 2 - (satRect.left + satRect.width / 2);
-        const dy = dockRect.top + dockRect.height / 2 - (satRect.top + satRect.height / 2);
-        const scale = Math.max(0.28, dockRect.width / Math.max(1, satRect.width));
-        setFlyTarget({ x: dx, y: dy, scale });
-      } else {
-        const isDesktop = window.innerWidth >= 768;
-        setFlyTarget(
-          isDesktop
-            ? { x: window.innerWidth / 2 - 140, y: -120, scale: 0.55 }
-            : { x: window.innerWidth / 2 - 104, y: window.innerHeight / 2 - 48, scale: 0.36 }
-        );
-      }
-
-      onStartFly?.();
-      setPhase('flying');
-
-      // Fallback finish guard if animation events are skipped in backgrounded tabs
-      safetyFinish = setTimeout(finishOnce, 920);
-    };
+    let lastShownInt = 0;
 
     const tick = (now) => {
       const elapsed = now - startTime;
-      const minRatio = Math.min(1, elapsed / minDuration);
-      const readyCap = docReady || elapsed > maxDuration ? 1 : 0.88;
-      const eased = 1 - Math.pow(1 - minRatio, 2.2);
-      const nextProgress = Math.min(100, Math.round(eased * readyCap * 100));
+      const rawT = Math.min(1, elapsed / duration);
+      // Smooth cosine ease-in-out curve for silky acceleration and deceleration around the circle
+      const smoothT = 0.5 - 0.5 * Math.cos(Math.PI * rawT);
+      const readyCap = docReady || elapsed >= maxWait ? 1 : 0.92;
+      const value = Math.min(1, smoothT * readyCap);
 
-      setProgress(nextProgress);
+      // Update SVG dashoffset directly at display refresh rate for buttery smoothness
+      if (ringRef.current) {
+        ringRef.current.style.strokeDashoffset = `${CIRCLE_CIRCUMFERENCE * (1 - value)}`;
+      }
+      if (dotGroupRef.current) {
+        dotGroupRef.current.style.transform = `rotate(${value * 360}deg)`;
+      }
 
-      if (elapsed >= minDuration && (docReady || elapsed >= maxDuration)) {
-        setProgress(100);
-        flyTimeout = setTimeout(launchFlight, 140);
+      const nextInt = Math.round(value * 100);
+      if (nextInt !== lastShownInt) {
+        lastShownInt = nextInt;
+        setPercent(nextInt);
+      }
+
+      if (rawT >= 1 && (docReady || elapsed >= maxWait)) {
+        if (ringRef.current) ringRef.current.style.strokeDashoffset = '0';
+        if (dotGroupRef.current) dotGroupRef.current.style.transform = 'rotate(360deg)';
+        setPercent(100);
+        holdTimeout = setTimeout(() => {
+          triggerExit();
+          safetyFinish = setTimeout(() => onComplete?.(), 650);
+        }, 200);
         return;
       }
+
       rafId = requestAnimationFrame(tick);
     };
 
@@ -94,140 +90,126 @@ export default function SpacePreloader({ onStartFly, onComplete }) {
     return () => {
       window.removeEventListener('load', onWindowLoad);
       if (rafId) cancelAnimationFrame(rafId);
-      if (flyTimeout) clearTimeout(flyTimeout);
+      if (holdTimeout) clearTimeout(holdTimeout);
       if (safetyFinish) clearTimeout(safetyFinish);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const isFlying = phase === 'flying';
-
   return (
-    <div
-      className="fixed inset-0 z-[100] pointer-events-none select-none"
-      aria-hidden={isFlying}
+    <motion.div
+      initial={{ opacity: 1, scale: 1 }}
+      animate={isExiting ? { opacity: 0, scale: 1.04 } : { opacity: 1, scale: 1 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      onAnimationComplete={() => {
+        if (isExiting) onComplete?.();
+      }}
+      className={`fixed inset-0 z-[100] bg-[#030614] flex flex-col items-center justify-center select-none ${
+        isExiting ? 'pointer-events-none' : 'pointer-events-auto'
+      }`}
+      aria-busy={!isExiting}
+      aria-label="Loading portfolio"
     >
-      {/* Cosmic Backdrop + Brand Logo + Telemetry Progress */}
+      {/* Subtle Radial Cosmic Ambient Glow */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-75"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 50%, rgba(0, 220, 240, 0.14) 0%, rgba(139, 92, 246, 0.1) 34%, rgba(3, 6, 20, 0) 68%)',
+        }}
+      />
+
+      {/* Centered Circular Loader Stage */}
       <motion.div
-        initial={{ opacity: 1 }}
-        animate={{ opacity: isFlying ? 0 : 1 }}
-        transition={{ duration: 0.42, ease: 'easeOut' }}
-        className={`fixed inset-0 bg-[#030614] grid grid-rows-[1fr_auto_1fr] justify-items-center px-6 ${
-          isFlying ? 'pointer-events-none' : 'pointer-events-auto'
-        }`}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="relative flex items-center justify-center w-44 h-44 sm:w-52 sm:h-52"
       >
-        {/* Subtle Deep Milky Way Radial Backdrop Glow */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-65"
+        {/* Outer Smooth Sweeping Circle Progress SVG */}
+        <svg
+          viewBox="0 0 180 180"
+          className="absolute inset-0 w-full h-full overflow-visible drop-shadow-[0_0_16px_rgba(0,220,240,0.35)]"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="preloaderRingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#00dcf0" />
+              <stop offset="52%" stopColor="#38bdf8" />
+              <stop offset="100%" stopColor="#a855f7" />
+            </linearGradient>
+          </defs>
+
+          {/* Subtle Track Ring */}
+          <circle
+            cx="90"
+            cy="90"
+            r={CIRCLE_RADIUS}
+            fill="none"
+            stroke="rgba(148, 163, 184, 0.14)"
+            strokeWidth="3.5"
+          />
+
+          {/* Smooth Progress Arc Starting from 12 O'Clock */}
+          <circle
+            ref={ringRef}
+            cx="90"
+            cy="90"
+            r={CIRCLE_RADIUS}
+            fill="none"
+            stroke="url(#preloaderRingGradient)"
+            strokeWidth="4.2"
+            strokeLinecap="round"
+            strokeDasharray={CIRCLE_CIRCUMFERENCE}
+            strokeDashoffset={CIRCLE_CIRCUMFERENCE}
+            transform="rotate(-90 90 90)"
+          />
+
+          {/* Orbiting Leading Spark on the Circle Tip */}
+          <g
+            ref={dotGroupRef}
+            style={{ transformOrigin: '90px 90px', transform: 'rotate(0deg)' }}
+          >
+            <circle cx="90" cy={90 - CIRCLE_RADIUS} r="4.2" fill="#e0f2fe" />
+          </g>
+        </svg>
+
+        {/* Round Circular Background Containing Logo.svg */}
+        <motion.div
+          animate={{ scale: [1, 1.025, 1] }}
+          transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+          className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full flex items-center justify-center border border-cyan-400/25 shadow-[inset_0_2px_20px_rgba(0,220,240,0.16),0_12px_40px_rgba(0,0,0,0.65)] overflow-hidden"
           style={{
             background:
-              'radial-gradient(circle at 50% 50%, rgba(0, 220, 240, 0.14) 0%, rgba(168, 85, 247, 0.1) 36%, rgba(3, 6, 20, 0) 70%)',
+              'radial-gradient(circle at 32% 28%, rgba(30, 58, 118, 0.72) 0%, rgba(10, 18, 46, 0.94) 55%, rgba(5, 8, 22, 0.98) 100%)',
           }}
-        />
-
-        {/* Name Logo Lockup above Centered Satellite Stage */}
-        <motion.div
-          initial={{ opacity: 0, y: -14 }}
-          animate={{ opacity: isFlying ? 0 : 1, y: isFlying ? -24 : 0 }}
-          transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="relative z-10 self-end flex flex-col items-center pb-5 sm:pb-6"
         >
-          <div className="flex items-center gap-3 px-4 py-2 rounded-2xl bg-slate-900/60 border border-cyan-500/25 shadow-[0_0_28px_rgba(0,220,240,0.18)]">
-            <img
-              src="/Logo.svg"
-              alt="Digonta Das Logo"
-              className="w-9 h-9 sm:w-11 sm:h-11 object-contain drop-shadow-[0_0_12px_rgba(0,220,240,0.65)]"
-            />
-            <div className="flex flex-col leading-none">
-              <span className="font-outfit text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-cyan-200 to-purple-300 bg-clip-text text-transparent">
-                DIGONTA DAS
-              </span>
-              <span className="mt-1 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.26em] text-cyan-400/90">
-                Software Engineer
-              </span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Exact Viewport-Center Placeholder Matching the Satellite Container */}
-        <div className="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
-          {/* Holographic Orbital Reticle Behind Satellite */}
-          <motion.div
-            animate={{ rotate: 360, scale: isFlying ? 0.6 : 1, opacity: isFlying ? 0 : 1 }}
-            transition={{
-              rotate: { duration: 12, repeat: Infinity, ease: 'linear' },
-              scale: { duration: 0.35 },
-              opacity: { duration: 0.3 },
+          {/* Soft Inner Rim Highlight */}
+          <div
+            className="absolute inset-0 rounded-full pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 55%)',
             }}
-            className="absolute inset-2 rounded-full border border-dashed border-cyan-400/35 shadow-[0_0_32px_rgba(0,220,240,0.16)]"
           />
-          <motion.div
-            animate={{ rotate: -360, opacity: isFlying ? 0 : 0.7 }}
-            transition={{
-              rotate: { duration: 16, repeat: Infinity, ease: 'linear' },
-              opacity: { duration: 0.3 },
-            }}
-            className="absolute inset-6 rounded-full border border-purple-500/30"
-          />
-        </div>
 
-        {/* Orbital Link Progress Bar */}
-        <motion.div
-          animate={{ opacity: isFlying ? 0 : 1, y: isFlying ? 12 : 0 }}
-          transition={{ duration: 0.32 }}
-          className="relative z-10 self-start w-56 sm:w-64 pt-5 flex flex-col items-center gap-2"
-        >
-          <div className="w-full h-1.5 rounded-full bg-slate-800/80 overflow-hidden border border-white/10">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 shadow-[0_0_12px_rgba(0,220,240,0.85)] transition-[width] duration-75"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="w-full flex items-center justify-between font-mono text-[10px] tracking-widest uppercase">
-            <span className="text-slate-400">
-              {progress >= 100 ? 'Satellite Deployed' : 'Deploying Satellite'}
-            </span>
-            <span className="text-cyan-300 font-semibold">{progress}%</span>
-          </div>
+          <img
+            src="/Logo.svg"
+            alt="Digonta Das Logo"
+            className="relative z-10 w-18 h-18 sm:w-20 sm:h-20 object-contain drop-shadow-[0_0_16px_rgba(0,220,240,0.45)]"
+          />
         </motion.div>
       </motion.div>
 
-      {/* Center-Stage 3D Satellite + Avatar That Flies Into Side Dock Position */}
-      <div className="fixed inset-0 z-[101] pointer-events-none flex items-center justify-center">
-        <motion.div
-          ref={satBoxRef}
-          initial={{ x: 0, y: 0, scale: 1, rotate: 0 }}
-          animate={
-            isFlying
-              ? {
-                  x: flyTarget.x,
-                  y: flyTarget.y,
-                  scale: flyTarget.scale,
-                  rotate: [0, -9, 0],
-                }
-              : { x: 0, y: 0, scale: 1, rotate: 0 }
-          }
-          transition={
-            isFlying
-              ? {
-                  duration: 0.68,
-                  ease: [0.22, 1, 0.36, 1],
-                  rotate: { duration: 0.68, times: [0, 0.45, 1] },
-                }
-              : { duration: 0.3 }
-          }
-          onAnimationComplete={() => {
-            if (isFlying) finishOnce();
-          }}
-          className="w-44 h-44 sm:w-52 sm:h-52 will-change-transform"
-        >
-          <SatelliteAvatar3D
-            isHovered={true}
-            pingKey={isFlying ? 1 : 0}
-            className="w-full h-full"
-          />
-        </motion.div>
-      </div>
-    </div>
+      {/* Subtle Loading Percentage Readout Below the Circle */}
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.85 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+        className="mt-5 font-mono text-xs tracking-[0.26em] text-cyan-300/85"
+      >
+        {percent}%
+      </motion.span>
+    </motion.div>
   );
 }
