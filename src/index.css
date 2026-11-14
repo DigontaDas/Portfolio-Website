@@ -363,13 +363,139 @@
   animation: marquee-scroll 28s linear infinite;
 }
 
-.marquee-wrapper:hover .animate-marquee {
+.marquee-wrapper:hover .animate-marquee,
+.water-marquee-wrapper:hover .water-stack-track {
   animation-play-state: paused;
 }
 
 .marquee-mask {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+/* ========================================================
+   BYTESPACE-INSPIRED WATER-FLOATING STACK PILL BLOCKS
+   ======================================================== */
+@keyframes waterStreamDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes buoyantFloating {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate3d(0, -8px, 0) rotate(1.3deg);
+  }
+  50% {
+    transform: translate3d(0, -1px, 0) rotate(-1.1deg);
+  }
+  75% {
+    transform: translate3d(0, 6px, 0) rotate(0.85deg);
+  }
+}
+
+@keyframes buoyantShadowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.72;
+  }
+  25% {
+    transform: scale(0.86);
+    opacity: 0.42;
+  }
+  75% {
+    transform: scale(1.1);
+    opacity: 0.88;
+  }
+}
+
+.water-stack-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  will-change: transform;
+  animation: waterStreamDrift 40s linear infinite;
+}
+
+.water-stack-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border-radius: 9999px;
+  background: linear-gradient(
+    145deg,
+    rgba(12, 24, 58, 0.86) 0%,
+    rgba(14, 18, 48, 0.8) 55%,
+    rgba(6, 12, 34, 0.92) 100%
+  );
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  border-top: 1px solid rgba(186, 230, 253, 0.34);
+  box-shadow:
+    0 12px 26px -6px rgba(2, 132, 199, 0.22),
+    0 4px 12px rgba(2, 6, 23, 0.65),
+    inset 0 1px 1px rgba(224, 242, 254, 0.18);
+  backdrop-filter: blur(10px) saturate(145%);
+  -webkit-backdrop-filter: blur(10px) saturate(145%);
+  will-change: transform;
+  animation: buoyantFloating var(--float-dur, 4.2s) ease-in-out infinite var(--float-delay, 0s);
+  transition: border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .water-stack-card:hover {
+    border-color: var(--stack-accent, rgba(0, 220, 240, 0.7));
+    box-shadow:
+      0 18px 34px -6px rgba(0, 220, 240, 0.3),
+      0 6px 16px rgba(2, 6, 23, 0.75),
+      inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  }
+}
+
+@media (max-width: 767px) {
+  .water-stack-card {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+}
+
+.water-glass-highlight {
+  position: absolute;
+  top: 0;
+  left: 14%;
+  right: 14%;
+  height: 46%;
+  background: linear-gradient(
+    180deg,
+    rgba(224, 242, 254, 0.14) 0%,
+    rgba(224, 242, 254, 0) 100%
+  );
+  border-radius: 9999px 9999px 0 0;
+  pointer-events: none;
+}
+
+.water-buoyant-shadow {
+  position: absolute;
+  bottom: -9px;
+  left: 14%;
+  width: 72%;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(56, 189, 248, 0.38) 0%,
+    rgba(139, 92, 246, 0.16) 45%,
+    transparent 75%
+  );
+  filter: blur(4px);
+  pointer-events: none;
+  animation: buoyantShadowPulse var(--float-dur, 4.2s) ease-in-out infinite var(--float-delay, 0s);
 }
 
 .animate-gradient-text {
@@ -408,6 +534,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
+  .water-stack-track,
+  .water-stack-card,
+  .water-buoyant-shadow,
   .animate-gradient-text,
   .animate-beacon,
   .animate-float-ambient {
