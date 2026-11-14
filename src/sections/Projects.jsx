@@ -96,8 +96,8 @@ const Projects = () => {
                 </div>
             </motion.div>
 
-            {/* Visual 5-Project Selector Strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mb-6">
+            {/* Visual 6-Project Selector Strip */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-6">
                 {myProjects.map((project, idx) => {
                     const isActive = idx === selectedProjectIndex;
                     return (
@@ -239,17 +239,33 @@ const Projects = () => {
                                     ))}
                                 </div>
 
-                                <motion.a
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.97 }}
-                                    className="flex items-center gap-2 text-xs font-mono text-white px-4 py-2 rounded-xl border border-cyan-400/40 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 hover:border-cyan-300 transition-all"
-                                    href={currentProject.href}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    <span>{currentProject.ctaLabel}</span>
-                                    <ExternalLink className="w-3.5 h-3.5" />
-                                </motion.a>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    {currentProject.repoHref && (
+                                        <motion.a
+                                            whileHover={{ scale: 1.03 }}
+                                            whileTap={{ scale: 0.97 }}
+                                            className="flex items-center gap-1.5 text-xs font-mono text-slate-200 hover:text-white px-3.5 py-2 rounded-xl border border-slate-700/80 bg-slate-900/70 hover:border-purple-400/60 transition-all"
+                                            href={currentProject.repoHref}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <span>GitHub</span>
+                                            <ExternalLink className="w-3.5 h-3.5" />
+                                        </motion.a>
+                                    )}
+
+                                    <motion.a
+                                        whileHover={{ scale: 1.03 }}
+                                        whileTap={{ scale: 0.97 }}
+                                        className="flex items-center gap-2 text-xs font-mono text-white px-4 py-2 rounded-xl border border-cyan-400/40 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 hover:border-cyan-300 transition-all"
+                                        href={currentProject.href}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <span>{currentProject.ctaLabel}</span>
+                                        <ExternalLink className="w-3.5 h-3.5" />
+                                    </motion.a>
+                                </div>
                             </div>
                         </motion.div>
                     </AnimatePresence>

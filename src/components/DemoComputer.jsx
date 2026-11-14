@@ -191,6 +191,21 @@ const createProjectScreenTexture = (screenType) => {
             ctx.font = 'bold 19px monospace';
             ctx.fillText(m.score, 780, my + 52);
         });
+    } else if (screenType === 'nocturne') {
+        ctx.fillStyle = '#090d1e';
+        ctx.fillRect(40, 36, 944, 696);
+        ctx.strokeStyle = 'rgba(168, 85, 247, 0.45)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(40, 36, 944, 696);
+
+        ctx.fillStyle = '#e2e8f0';
+        ctx.font = 'bold 28px "Space Grotesk", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('NOCTURNE // SPATIAL DINING & SEAT LOCKING', 512, 340);
+
+        ctx.fillStyle = '#a855f7';
+        ctx.font = 'bold 20px monospace';
+        ctx.fillText('LOADING VIDEO DEMO...', 512, 400);
     } else {
         ctx.fillStyle = '#00dcf0';
         ctx.font = 'bold 26px monospace';

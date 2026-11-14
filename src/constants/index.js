@@ -33,6 +33,30 @@ export const navLinks = [
 
 export const myProjects = [
     {
+        id: 'nocturne',
+        title: 'Nocturne',
+        subtitle: 'Rooftop Dining, Seat-Locking & Concierge Platform',
+        badge: 'Full-Stack · RAG',
+        desc: 'Full-stack fine-dining sanctuary platform with an interactive 2D spatial floorplan, atomic Redis 10-minute table locking, tasting menu customization, and grounded pgvector concierge.',
+        highlights: [
+            { label: 'Seat Locking', value: 'Redis NX 600s' },
+            { label: 'Floorplan UI', value: '18-Table Spatial' },
+            { label: 'Concierge AI', value: 'PGVector + SSE' },
+        ],
+        href: 'https://nocturne-one-xi.vercel.app',
+        ctaLabel: 'Live Site',
+        repoHref: 'https://github.com/DigontaDas/Nocturne',
+        texture: '/textures/project/nocturne.mp4',
+        screenType: 'nocturne',
+        spotlight: '/assets/spotlight4.png',
+        accent: 'purple',
+        tags: [
+            { id: 1, name: 'Next.js / React', path: '/assets/react.svg' },
+            { id: 2, name: 'TypeScript', path: '/assets/typescript.png' },
+            { id: 3, name: 'FastAPI', path: '/assets/python.png' },
+        ],
+    },
+    {
         id: 'masheba-ai',
         title: 'MaSheba AI',
         subtitle: 'Offline Maternal Health Platform',
