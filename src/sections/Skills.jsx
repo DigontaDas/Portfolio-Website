@@ -340,67 +340,6 @@ const Skills = () => {
                 </div>
             </motion.div>
 
-            {/* ByteSpace-Style Water-Floating Stack Pill Blocks */}
-            <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5 }}
-                className="relative w-full overflow-hidden water-marquee-wrapper marquee-mask pt-2 pb-8 mb-4"
-                aria-label="Core Engineering Stack"
-            >
-                <div
-                    className="absolute left-6 right-6 bottom-5 h-px bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent pointer-events-none"
-                    aria-hidden="true"
-                />
-
-                <div className="water-stack-track gap-4 sm:gap-6 px-2">
-                    {[...waterStackCards, ...waterStackCards].map((stack, idx) => (
-                        <div
-                            key={`${stack.name}-${idx}`}
-                            className="water-stack-card px-4 py-2.5 pr-5 sm:px-5 sm:py-3 sm:pr-6 select-none cursor-default group"
-                            style={{
-                                '--float-delay': `${(idx % 7) * -0.58}s`,
-                                '--float-dur': `${3.8 + (idx % 4) * 0.45}s`,
-                                '--stack-accent': stack.color,
-                            }}
-                        >
-                            <div className="water-glass-highlight" />
-
-                            <div
-                                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0 border border-white/10 transition-transform duration-200 group-hover:scale-105"
-                                style={{ backgroundColor: stack.bg }}
-                            >
-                                {stack.icon}
-                            </div>
-
-                            <div className="flex flex-col text-left leading-tight">
-                                <div className="flex items-center gap-1.5">
-                                    <span className="font-outfit font-bold text-xs sm:text-sm text-white whitespace-nowrap">
-                                        {stack.name}
-                                    </span>
-                                    <svg
-                                        width="12"
-                                        height="12"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        className="text-cyan-400 shrink-0"
-                                        aria-hidden="true"
-                                    >
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                                    </svg>
-                                </div>
-                                <span className="font-mono text-[10px] sm:text-[11px] text-slate-400 whitespace-nowrap mt-0.5">
-                                    {stack.role}
-                                </span>
-                            </div>
-
-                            <div className="water-buoyant-shadow" />
-                        </div>
-                    ))}
-                </div>
-            </motion.div>
-
             <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 sm:gap-6">
                 {skillGroups.map((group, idx) => {
                     const a = accentStyles[group.accent];
@@ -499,6 +438,67 @@ const Skills = () => {
                     </div>
                 </motion.div>
             </div>
+
+            {/* ByteSpace-Style Water-Floating Stack Pill Blocks at End of Skills Matrix */}
+            <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5 }}
+                className="relative w-full overflow-hidden water-marquee-wrapper marquee-mask mt-7 pt-3 pb-7"
+                aria-label="Core Engineering Stack"
+            >
+                <div
+                    className="absolute left-6 right-6 bottom-5 h-px bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent pointer-events-none"
+                    aria-hidden="true"
+                />
+
+                <div className="water-stack-track gap-4 sm:gap-6 px-2">
+                    {[...waterStackCards, ...waterStackCards].map((stack, idx) => (
+                        <div
+                            key={`${stack.name}-${idx}`}
+                            className="water-stack-card px-4 py-2.5 pr-5 sm:px-5 sm:py-3 sm:pr-6 select-none cursor-default group"
+                            style={{
+                                '--float-delay': `${(idx % 7) * -0.58}s`,
+                                '--float-dur': `${3.8 + (idx % 4) * 0.45}s`,
+                                '--stack-accent': stack.color,
+                            }}
+                        >
+                            <div className="water-glass-highlight" />
+
+                            <div
+                                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0 border border-white/10 transition-transform duration-200 group-hover:scale-105"
+                                style={{ backgroundColor: stack.bg }}
+                            >
+                                {stack.icon}
+                            </div>
+
+                            <div className="flex flex-col text-left leading-tight">
+                                <div className="flex items-center gap-1.5">
+                                    <span className="font-outfit font-bold text-xs sm:text-sm text-white whitespace-nowrap">
+                                        {stack.name}
+                                    </span>
+                                    <svg
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        className="text-cyan-400 shrink-0"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                                    </svg>
+                                </div>
+                                <span className="font-mono text-[10px] sm:text-[11px] text-slate-400 whitespace-nowrap mt-0.5">
+                                    {stack.role}
+                                </span>
+                            </div>
+
+                            <div className="water-buoyant-shadow" />
+                        </div>
+                    ))}
+                </div>
+            </motion.div>
         </section>
     );
 };

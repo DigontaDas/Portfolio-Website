@@ -10,21 +10,6 @@ const techBadges = [
   "Docker & CI/CD",
 ];
 
-const marqueeStack = [
-  "Python",
-  "FastAPI",
-  "PostgreSQL",
-  "PGVector",
-  "PyTorch",
-  "Hugging Face",
-  "OpenAI API",
-  "LLMOps",
-  "WhisperAI",
-  "Docker",
-  "React.js",
-  "GitHub Actions",
-];
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -188,7 +173,7 @@ export default function HeroSection() {
         {/* Interactive CTA Hub */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-wrap justify-center items-center gap-2.5 sm:gap-3.5 mb-10 sm:mb-12"
+          className="flex flex-wrap justify-center items-center gap-2.5 sm:gap-3.5"
         >
           <motion.a
             whileHover={{ scale: 1.04, y: -2 }}
@@ -232,24 +217,6 @@ export default function HeroSection() {
             <span>Resume</span>
             <Download className="w-3.5 h-3.5 text-purple-400" />
           </motion.a>
-        </motion.div>
-
-        {/* Infinite Tech Stack Marquee (Mihir-inspired motion strip) */}
-        <motion.div
-          variants={itemVariants}
-          className="w-full max-w-3xl overflow-hidden marquee-wrapper marquee-mask py-2"
-        >
-          <div className="animate-marquee items-center gap-6">
-            {[...marqueeStack, ...marqueeStack].map((item, idx) => (
-              <span
-                key={`${item}-${idx}`}
-                className="flex items-center gap-2 text-xs font-mono text-slate-400 whitespace-nowrap"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/70" />
-                {item}
-              </span>
-            ))}
-          </div>
         </motion.div>
       </motion.div>
     </section>
