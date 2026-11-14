@@ -169,7 +169,7 @@ export default function CharacterNavigator({ visible = true, docked = true }) {
           <button
             type="button"
             onClick={() => setRailExpanded((prev) => !prev)}
-            title="Digonta Satellite Guide — Hover or ping a waypoint to jump"
+            title="Digonta Satellite Guide: Hover or ping a waypoint to jump"
             aria-label="Toggle section labels"
             className="relative w-24 h-24 lg:w-28 lg:h-28 cursor-pointer focus:outline-none group"
           >

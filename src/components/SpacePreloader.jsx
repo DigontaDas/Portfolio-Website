@@ -143,7 +143,7 @@ export default function SpacePreloader({ onStartFly, onComplete }) {
                 DIGONTA DAS
               </span>
               <span className="mt-1 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.26em] text-cyan-400/90">
-                AI &amp; Backend Systems
+                Software Engineer
               </span>
             </div>
           </div>

@@ -97,7 +97,7 @@ export default function HeroSection() {
         >
           <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 animate-beacon" />
           <span className="text-[11px] sm:text-xs font-sans text-slate-200 font-medium tracking-wide truncate">
-            BRAC University CSE <span className="text-slate-600 mx-1">•</span> Software Engineer (Python &amp; AI)
+            BRAC University CSE <span className="text-slate-600 mx-1">•</span> Software Engineer
           </span>
         </motion.div>
 
@@ -140,7 +140,7 @@ export default function HeroSection() {
             fontFamily: "'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif",
           }}
         >
-          Software Engineer <span className="text-cyan-400 font-light mx-1">&amp;</span> AI Engineer
+          Software Engineer
         </motion.h2>
 
         {/* Concise Technical Summary */}

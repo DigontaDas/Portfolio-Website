@@ -161,7 +161,7 @@ export const featuredCertificates = [
     },
     {
         id: 'edupro-round-1',
-        title: 'Edupro Global Green Talent Awards — Round 1',
+        title: 'Edupro Global Green Talent Awards (Round 1)',
         subtitle: 'Certificate of Round 1 Achievement · Team Jagotic Moho',
         issuer: 'Edupro UK & Leeds University Business School',
         date: 'May 2026',
@@ -175,7 +175,7 @@ export const featuredCertificates = [
     },
     {
         id: 'edupro-round-2',
-        title: 'Edupro Global Green Talent Awards — Round 2',
+        title: 'Edupro Global Green Talent Awards (Round 2)',
         subtitle: 'Round 2 Qualifier · Team Jagotic Moho',
         issuer: 'Edupro UK & University of Leeds',
         date: 'June 2026',

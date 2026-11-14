@@ -138,16 +138,16 @@ const About = () => {
                                     </div>
                                 </div>
                                 <p className="text-xs font-mono text-cyan-400 mb-4">
-                                    Software Engineer (Python &amp; AI Systems)
+                                    Software Engineer
                                 </p>
 
                                 <p className="grid-subtext">
-                                    Software and AI Engineer focused on designing high-performance, type-safe Python backends
+                                    Software Engineer focused on designing high-performance, type-safe Python backends
                                     with <span className="text-cyan-300 font-semibold">FastAPI, PostgreSQL, and Docker</span>.
                                 </p>
                                 <p className="grid-subtext mt-3">
                                     Bridging RESTful API engineering, relational data modeling, and automated CI/CD with
-                                    production AI —{' '}
+                                    production AI, including{' '}
                                     <span className="text-purple-300 font-semibold">
                                         RAG pipelines, OpenAI &amp; Hugging Face workflows, Speech AI (Whisper), and 3D Medical Computer Vision
                                     </span>.
